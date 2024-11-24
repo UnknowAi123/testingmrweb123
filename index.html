@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale-no">
     <title>Mr.Web!</title>
     <style>
         body {
@@ -81,6 +81,7 @@
             margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
             padding: 0;  /* Asegurarse de que no hay padding */
             word-wrap: break-word; /* Permite que el texto se ajuste y no se desborde */
+            overflow-wrap: break-word; /* Asegura que el contenido no se desborde */
         }
 
         .link-container a {
@@ -211,7 +212,7 @@
                     // Ordenar los enlaces teniendo en cuenta solo el texto después de "www."
                     links.sort((a, b) => {
                         const aDomain = (new URL(a)).hostname.replace(/^www\./, '');
-                        const bDomain = (new URL(b)).hostname replace(/^www\./, '');
+                        const bDomain = (new URL(b)).hostname.replace(/^www\./, '');
                         return aDomain.localeCompare(bDomain);
                     });
 
@@ -307,4 +308,3 @@
 </script>
 </body>
 </html>
-
