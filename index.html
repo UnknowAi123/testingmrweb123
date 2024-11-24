@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mr.Web!</title>
-    <style>
+    <style id="common-styles">
         body {
             background-color: SeaGreen;
             overflow-x: hidden; /* Previene el desplazamiento lateral */
@@ -44,28 +44,14 @@
             text-decoration: none;
         }
 
-        .minorheader-text {
+        .minorheader-text, .additional-header-text, .link-container a, .top-link {
             color: green;
+            text-align: center;
             font-size: 16px;
             font-family: "Times New Roman", serif;
             font-weight: normal;
             font-style: normal;
             text-decoration: none;
-            text-align: center;
-            margin-left: 10px; /* Añadir margen izquierdo */
-            margin-right: 10px; /* Añadir margen derecho */
-        }
-
-        .additional-header-text {
-            color: yellow;
-            text-align: left;
-            font-size: 24px;
-            font-family: Arial, sans-serif;
-            font-weight: normal;
-            font-style: normal;
-            text-decoration: none;
-            margin-left: 10px; /* Añadir margen izquierdo */
-            margin-right: 10px; /* Añadir margen derecho */
         }
 
         a {
@@ -84,8 +70,6 @@
             align-items: flex-start;
             margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
             padding: 0;  /* Asegurarse de que no hay padding */
-            margin-left: 10px; /* Añadir margen izquierdo */
-            margin-right: 10px; /* Añadir margen derecho */
         }
 
         .link-container a {
@@ -101,7 +85,6 @@
             font-style: normal;
             text-decoration: none;
             margin-top: 10px;
-            margin-left: 10px; /* Añadir margen izquierdo */
         }
 
         .top-link:visited {
@@ -137,7 +120,7 @@
         /* Asegurarse de que no hay margen superior no deseado en el contenedor principal */
         #content {
             margin-top: 0;
-            text-align: left; /* Revertir cambio, alineación a la izquierda */
+            text-align: left; /* Alineación a la izquierda */
         }
 
         #links {
@@ -172,6 +155,40 @@
         <div id="links"></div>
     </div>
 <script>
+    function applyBrowserSpecificStyles() {
+        const userAgent = navigator.userAgent;
+        if (/firefox/i.test(userAgent)) {
+            // Estilos específicos para Firefox
+            const firefoxStyles = `
+                .minorheader-text, .additional-header-text, .link-container, .top-link {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+            `;
+            document.querySelector('#common-styles').insertAdjacentHTML('beforeend', `<style>${firefoxStyles}</style>`);
+        } else if (/chrome|chromium|crios/i.test(userAgent)) {
+            // Estilos específicos para navegadores basados en Chromium
+            const chromiumStyles = `
+                .minorheader-text, .additional-header-text, .link-container, .top-link {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+            `;
+            document.querySelector('#common-styles').insertAdjacentHTML('beforeend', `<style>${chromiumStyles}</style>`);
+        } else {
+            // Estilos por defecto
+            const defaultStyles = `
+                .minorheader-text, .additional-header-text, .link-container, .top-link {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+            `;
+            document.querySelector('#common-styles').insertAdjacentHTML('beforeend', `<style>${defaultStyles}</style>`);
+        }
+    }
+
+    applyBrowserSpecificStyles();
+
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
 
