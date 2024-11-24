@@ -80,6 +80,7 @@
             align-items: flex-start;
             margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
             padding: 0;  /* Asegurarse de que no hay padding */
+            word-wrap: break-word; /* Permite que el texto se ajuste y no se desborde */
         }
 
         .link-container a {
@@ -165,7 +166,6 @@
         <h4 class="minorheader-text" id="linkCount">[0]</h4>
         <h5 class="additional-header-text" id="linkIndex"></h5>
         <div id="links"></div>
-    </div>
 <script>
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
@@ -211,7 +211,7 @@
                     // Ordenar los enlaces teniendo en cuenta solo el texto después de "www."
                     links.sort((a, b) => {
                         const aDomain = (new URL(a)).hostname.replace(/^www\./, '');
-                        const bDomain = (new URL(b)).hostname.replace(/^www\./, '');
+                        const bDomain = (new URL(b)).hostname replace(/^www\./, '');
                         return aDomain.localeCompare(bDomain);
                     });
 
