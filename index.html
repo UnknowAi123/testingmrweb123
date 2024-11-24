@@ -146,6 +146,7 @@
         <h5 class="additional-header-text" id="linkIndex"></h5>
         <div id="links"></div>
     </div>
+
 <script>
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
@@ -226,7 +227,8 @@
                             return `<a href="#${shortBaseUrl}" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
-             document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
+
+                    document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
 
                     const linkContainers = document.querySelectorAll('.link-container');
                     linkContainers.forEach((container, i) => {
@@ -240,14 +242,6 @@
                     });
 
                     updateVisibility(); // Actualizar visibilidad de encabezados
-
-                    // Añadir evento para los enlaces "top link"
-                    document.querySelectorAll('.top-link').forEach(link => {
-                        link.addEventListener('click', function(event) {
-                            event.preventDefault();
-                            document.querySelector('.page-title').scrollIntoView({ behavior: 'smooth' });
-                        });
-                    });
                 }
             };
 
