@@ -201,7 +201,7 @@
                         return `
                         <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 3px;">
                             ${showNumbering === 'yes' ? `<span class="link-number">${index + 1}.</span>` : ''}
-                            <a class="break-all" href="javascript:void(0)" onclick="scrollToSection('${shortUrl.replace(/[^\w]/g, '_')}');">${url}</a>
+                            <a class="break-all" href="#" onclick="scrollToSection('${shortUrl.replace(/[^\w]/g, '_')}'); event.preventDefault();">${url}</a>
                         </div>`;
                     }).join('');
 
@@ -223,7 +223,7 @@
                         .sort()
                         .map(baseUrl => {
                             const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
-                            return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}');" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
+                            return `<a href="#" onclick="scrollToSection('${shortBaseUrl}'); event.preventDefault();" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
 
@@ -233,7 +233,7 @@
                     linkContainers.forEach((container, i) => {
                         if ((i + 1) % 20 === 0) {
                             const topLink = document.createElement('a');
-                            topLink.href = 'javascript:void(0)';
+                            topLink.href = '#';
                             topLink.className = 'top-link';
                             topLink.innerHTML = '#######';
                             container.insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
@@ -278,4 +278,3 @@
 </script>
 </body>
 </html>
-
