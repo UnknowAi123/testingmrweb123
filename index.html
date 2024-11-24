@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,6 @@
         body {
             background-color: SeaGreen;
         }
-
 
         .page-title {
             color: yellow;
@@ -20,7 +19,6 @@
             text-decoration: none;
         }
 
-
         .header-text {
             color: red;
             text-align: center;
@@ -30,7 +28,6 @@
             font-style: normal;
             text-decoration: none;
         }
-
 
         .subheader-text {
             color: blue;
@@ -42,7 +39,6 @@
             text-decoration: none;
         }
 
-
         .minorheader-text {
             color: green;
             font-size: 16px;
@@ -52,7 +48,6 @@
             text-decoration: none;
             text-align: center;
         }
-
 
         .additional-header-text {
             color: yellow;
@@ -64,18 +59,15 @@
             text-decoration: none;
         }
 
-
         a {
             color: black;
             font-size: 14px;
             font-family: Helvetica, sans-serif;
         }
 
-
         a:visited {
             color: aquamarine;
         }
-
 
         .link-container {
             display: flex;
@@ -84,11 +76,9 @@
             padding: 0;  /* Asegurarse de que no hay padding */
         }
 
-
         .link-container a {
             line-height: 1.2;  /* Ajuste la altura de línea según sea necesario */
         }
-
 
         .top-link {
             color: orange;
@@ -101,11 +91,9 @@
             margin-top: 10px;
         }
 
-
         .top-link:visited {
             color: darkorange;
         }
-
 
         .button1 {
             background-color: #4CAF50;
@@ -125,7 +113,6 @@
             box-sizing: border-box;
         }
 
-
         .button-container {
             display: flex;
             flex-direction: column;
@@ -134,12 +121,10 @@
             margin-bottom: 20px;
         }
 
-
         /* Asegurarse de que no hay margen superior no deseado en el contenedor principal */
         #content {
             margin-top: 0;
         }
-
 
         #links {
             margin-bottom: 20px;
@@ -150,12 +135,10 @@
     <h1 class="page-title">Mr.Web!</h1>
     <h2 class="header-text">Encabezado del Contenido</h2>
 
-
     <div class="button-container">
         <button class="button1" id="selectFileButton">Seleccionar Archivo</button>
         <input type="file" id="fileInput" accept=".txt" style="display:none;">
     </div>
-
 
     <div id="content">
         <h3 class="subheader-text" id="fileName">#######</h3>
@@ -163,15 +146,11 @@
         <h5 class="additional-header-text" id="linkIndex"></h5>
         <div id="links"></div>
     </div>
-
-
 <script>
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
 
-
     let selectedFile = null;
-
 
     function updateVisibility() {
         for (let tag in showHeaders) {
@@ -181,40 +160,32 @@
         }
     }
 
-
     document.addEventListener('DOMContentLoaded', updateVisibility);
-
 
     document.getElementById('selectFileButton').addEventListener('click', function() {
         document.getElementById('fileInput').click();
     });
 
-
     document.getElementById('fileInput').addEventListener('change', function() {
         const fileInput = document.getElementById('fileInput');
         selectedFile = fileInput.files[0];
 
-
         let fileName = selectedFile.name;
         fileName = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
         document.getElementById('fileName').textContent = fileName;
-
 
         // Limpiar los contenidos anteriores
         document.getElementById('links').innerHTML = '';
         document.getElementById('linkIndex').innerHTML = '';
         document.getElementById('linkCount').textContent = '[0]';
 
-
         if (selectedFile) {
             const reader = new FileReader();
-
 
             reader.onload = function(e) {
                 const content = e.target.result;
                 const linkRegex = /(?:https?|ftp):\/\/[\n\S]+/g;
                 const links = content.match(linkRegex);
-
 
                 if (links) {
                     // Ordenar los enlaces teniendo en cuenta solo el texto después de "www."
@@ -223,7 +194,6 @@
                         const bDomain = (new URL(b)).hostname.replace(/^www\./, '');
                         return aDomain.localeCompare(bDomain);
                     });
-
 
                     const linksHTML = links.map((url, index) => {
                         const urlWithoutProtocol = url.replace(/https?:\/\/(www\.)?/, '');
@@ -235,13 +205,10 @@
                         </div>`;
                     }).join('');
 
-
                     document.getElementById('links').innerHTML = linksHTML;
-
 
                     // Actualiza el h4 con la cantidad de enlaces en formato [número]
                     document.getElementById('linkCount').textContent = `[${links.length}]`;
-
 
                     // Genera el índice de enlaces
                     const baseUrls = links.reduce((acc, link) => {
@@ -252,7 +219,6 @@
                         return acc;
                     }, {});
 
-
                     const indexHTML = Object.keys(baseUrls)
                         .sort()
                         .map(baseUrl => {
@@ -260,10 +226,7 @@
                             return `<a href="#${shortBaseUrl}" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
-
-
-                    document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
-
+             document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
 
                     const linkContainers = document.querySelectorAll('.link-container');
                     linkContainers.forEach((container, i) => {
@@ -276,21 +239,25 @@
                         }
                     });
 
-
                     updateVisibility(); // Actualizar visibilidad de encabezados
+
+                    // Añadir evento para los enlaces "top link"
+                    document.querySelectorAll('.top-link').forEach(link => {
+                        link.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            document.querySelector('.page-title').scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
                 }
             };
-
 
             reader.readAsText(selectedFile);
         }
     });
 
-
     document.getElementById('fileInput').addEventListener('click', function() {
         this.value = null;
     });
-
 
     function setVisibility(tag, visibility) {
         if (tag === 'numbering') {
