@@ -223,16 +223,17 @@
                         .sort()
                         .map(baseUrl => {
                             const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
-                            return `<a href="#${shortBaseUrl}" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
+                            return `<a href="javascript:void(0)" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
-             document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
+
+                    document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
 
                     const linkContainers = document.querySelectorAll('.link-container');
                     linkContainers.forEach((container, i) => {
                         if ((i + 1) % 20 === 0) {
                             const topLink = document.createElement('a');
-                            topLink.href = '#';
+                            topLink.href = 'javascript:void(0)';
                             topLink.className = 'top-link';
                             topLink.innerHTML = '#######';
                             container.insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
