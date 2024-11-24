@@ -165,7 +165,6 @@
         <h4 class="minorheader-text" id="linkCount">[0]</h4>
         <h5 class="additional-header-text" id="linkIndex"></h5>
         <div id="links"></div>
-    </div>
 <script>
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
@@ -191,7 +190,7 @@
         selectedFile = fileInput.files[0];
 
         let fileName = selectedFile.name;
-        fileName = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
+        fileName = fileName.substring(0, fileName lastIndexOf('.')) || fileName;
         document.getElementById('fileName').textContent = fileName;
 
         // Limpiar los contenidos anteriores
