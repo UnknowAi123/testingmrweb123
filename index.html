@@ -202,7 +202,7 @@
                         return `
                         <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 3px;">
                             ${showNumbering === 'yes' ? `<span class="link-number">${index + 1}.</span>` : ''}
-                            <a class="break-all" href="javascript:void(0)" onclick="window.open('${url}', '_blank');">${url}</a>
+                            <a class="break-all" href="${url}" target="_blank">${url}</a>
                         </div>`;
                     }).join('');
 
@@ -224,7 +224,7 @@
                         .sort()
                         .map(baseUrl => {
                             const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
-                            return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}'); event.preventDefault();" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
+                            return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}');" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
 
