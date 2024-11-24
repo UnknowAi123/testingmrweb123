@@ -52,7 +52,6 @@
             font-style: normal;
             text-decoration: none;
             text-align: center;
-            margin: 0 10px; /* Margen derecho e izquierdo */
         }
 
         .additional-header-text {
@@ -63,7 +62,6 @@
             font-weight: normal;
             font-style: normal;
             text-decoration: none;
-            margin: 0 10px; /* Margen derecho e izquierdo */
         }
 
         a {
@@ -71,7 +69,6 @@
             font-size: 14px;
             font-family: Helvetica, sans-serif;
             text-decoration: none;
-            margin: 0 10px; /* Margen derecho e izquierdo */
         }
 
         a:visited {
@@ -83,7 +80,6 @@
             align-items: flex-start;
             margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
             padding: 0;  /* Asegurarse de que no hay padding */
-            margin: 0 10px; /* Margen derecho e izquierdo */
         }
 
         .link-container a {
@@ -99,7 +95,6 @@
             font-style: normal;
             text-decoration: none;
             margin-top: 10px;
-            margin: 0 10px; /* Margen derecho e izquierdo */
         }
 
         .top-link:visited {
@@ -146,7 +141,8 @@
             max-width: 100vw; /* Asegura que el contenido no se desborde */
             box-sizing: border-box;
             overflow: hidden;
-            padding: 0 10px; /* Margen derecho e izquierdo */
+            margin-left: 10px; /* Añadir margen izquierdo */
+            margin-right: 10px; /* Añadir margen derecho */
         }
 
         img, iframe, video {
@@ -260,7 +256,6 @@
                             topLink.href = 'javascript:void(0)';
                             topLink.className = 'top-link';
                             topLink.innerHTML = '#######';
-                            topLink.style.margin = '0 10px'; /* Margen derecho e izquierdo */
                             container.insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
                         }
                     });
