@@ -202,7 +202,7 @@
                         return `
                         <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 3px;">
                             ${showNumbering === 'yes' ? `<span class="link-number">${index + 1}.</span>` : ''}
-                            <a class="break-all" href="${url}" target="_blank">${url}</a>
+                            <a class="break-all" href="${url}" target="_blank" onclick="event.preventDefault(); window.open('${url}', '_blank');">${url}</a>
                         </div>`;
                     }).join('');
 
