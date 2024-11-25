@@ -83,13 +83,11 @@
             word-wrap: break-word; /* Permite que el texto se ajuste y no se desborde */
             overflow-wrap: break-word; /* Asegura que el contenido no se desborde */
             white-space: normal; /* Permite que el texto se ajuste a múltiples líneas */
-            overflow: hidden; /* Oculta cualquier desbordamiento */
-            text-overflow: ellipsis; /* Añade puntos suspensivos al final del texto que se desborda */
+            max-width: 100%; /* Asegura que no se desborde el contenedor */
         }
 
         .link-container a {
             line-height: 1.2;  /* Ajuste la altura de línea según sea necesario */
-            word-break: break-all; /* Fuerza el corte de palabras largas */
         }
 
         .top-link {
@@ -196,7 +194,7 @@
         selectedFile = fileInput.files[0];
 
         let fileName = selectedFile.name;
-        fileName = fileName.substring(0, fileName lastIndexOf('.')) || fileName;
+        fileName = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
         document.getElementById('fileName').textContent = fileName;
 
         // Limpiar los contenidos anteriores
@@ -216,12 +214,12 @@
                     // Ordenar los enlaces teniendo en cuenta solo el texto después de "www."
                     links.sort((a, b) => {
                         const aDomain = (new URL(a)).hostname.replace(/^www\./, '');
-                        const bDomain = (new URL(b)).hostname replace(/^www\./, '');
+                        const bDomain = (new URL(b)).hostname.replace(/^www\./, '');
                         return aDomain.localeCompare(bDomain);
                     });
 
                     const linksHTML = links.map((url, index) => {
-                        const urlWithoutProtocol = url replace(/https?:\/\/(www\.)?/, '');
+                        const urlWithoutProtocol = url.replace(/https?:\/\/(www\.)?/, '');
                         const shortUrl = urlWithoutProtocol.split('/')[0]; // Solo la primera barra
                         return `
                         <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 3px;">
@@ -238,16 +236,16 @@
                     // Genera el índice de enlaces
                     const baseUrls = links.reduce((acc, link) => {
                         const url = new URL(link);
-                        const baseUrl = url.hostname replace(/^www\./, '').toLowerCase();
+                        const baseUrl = url.hostname.replace(/^www\./, '').toLowerCase();
                         acc[baseUrl] = acc[baseUrl] || [];
                         acc[baseUrl].push(url.href);
                         return acc;
                     }, {});
 
-                    const indexHTML = Object keys(baseUrls)
+                    const indexHTML = Object.keys(baseUrls)
                         .sort()
                         .map(baseUrl => {
-                            const shortBaseUrl = baseUrl replace(/[^\w]/g, '_');
+                            const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
                             return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}');" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
@@ -261,7 +259,7 @@
                             topLink.href = 'javascript:void(0)';
                             topLink.className = 'top-link';
                             topLink.innerHTML = '#######';
-                            container insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
+                            container.insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
                         }
                     });
 
@@ -291,7 +289,7 @@
     });
 
     document.getElementById('fileInput').addEventListener('click', function() {
-        this value = null;
+        this.value = null;
     });
 
     function setVisibility(tag, visibility) {
