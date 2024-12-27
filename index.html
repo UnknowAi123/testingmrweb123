@@ -31,16 +31,16 @@
             font-family: Verdana, sans-serif;
             font-weight: normal;
             font-style: normal;
-            text-decoration: none;
+            text-decoration: none.
         }
 
         .subheader-text {
             color: blue;
-            text-align: center;
-            font-size: 36px;
-            font-family: Georgia, serif;
-            font-weight: normal;
-            font-style: normal;
+            text-align: center.
+            font-size: 36px.
+            font-family: Georgia, serif.
+            font-weight: normal.
+            font-style: normal.
             text-decoration: none.
         }
 
@@ -284,24 +284,23 @@ document.querySelectorAll('#linkIndex a').forEach(link => {
 });
 
 // Deshabilitar refresco por deslizamiento
-let touchstartY = 0;
-let touchendY = 0;
-
-function checkDirection() {
-    if (touchendY < touchstartY) {
-        // Detener el evento de deslizamiento hacia abajo
+document.addEventListener('touchmove', function(event) {
+    if (event.touches.length > 1) {
         event.preventDefault();
     }
-}
+}, { passive: false });
 
-window.addEventListener('touchstart', function(event) {
-    touchstartY = event.changedTouches[0].screenY;
-});
+document.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
 
-window.addEventListener('touchend', function(event) {
-    touchendY = event.changedTouches[0].screenY;
-    checkDirection();
-});
+document.addEventListener('touchend', function(event) {
+    if (event.touches.length > 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
 }
 };
 
