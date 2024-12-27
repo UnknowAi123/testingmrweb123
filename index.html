@@ -72,21 +72,21 @@
         .link-container {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 5px;
+            margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
             padding: 0;  /* Asegurarse de que no hay padding */
         }
 
         .link-container a {
-            line-height: 1.2;
+            line-height: 1.2;  /* Ajuste la altura de línea según sea necesario */
         }
 
         .top-link {
             color: orange;
             text-align: center;
-            font-size: 16px;
+            font-size: 26px;
             font-family: Arial, sans-serif;
             font-weight: bold;
-            font-style: italic;
+            font-style: normal;
             text-decoration: none;
             margin-top: 10px;
         }
@@ -126,30 +126,14 @@
             margin-top: 0;
         }
 
-        /* Estilos personalizados para el índice */
-        .index-link {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            color: black;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .index-link:hover {
-            color: blue;
-            text-decoration: underline;
-        }
-
-        /* Estilo para mostrar texto en mayúsculas */
-        .uppercase-text {
-            text-transform: uppercase;
+        #links {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h1 class="page-title" id="h1">Mr.Web!</h1>
-    <h2 class="header-text" id="h2">Encabezado del Contenido</h2>
+    <h1 class="page-title">Mr.Web!</h1>
+    <h2 class="header-text">Encabezado del Contenido</h2>
 
     <div class="button-container">
         <button class="button1" id="selectFileButton">Seleccionar Archivo</button>
@@ -157,9 +141,10 @@
     </div>
 
     <div id="content">
-        <h3 class="subheader-text" id="h3">#######</h3>
-        <h4 class="minorheader-text" id="h4">[0]</h4>
-        <h5 class="additional-header-text" id="h5"></h5>
+        <h3 class="subheader-text" id="fileName">#######</h3>
+        <h4 class="minorheader-text" id="linkCount">[0]</h4>
+        <h5 class="additional-header-text" id="linkIndex"></h5>
+        <div id="links"></div>
     </div>
 
 <script>
@@ -176,24 +161,7 @@
         }
     }
 
-    function toggleUppercase(elementId, shouldEnable) {
-        const element = document.getElementById(elementId);
-        if (shouldEnable) {
-            element.classList.add('uppercase-text');
-        } else {
-            element.classList.remove('uppercase-text');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        updateVisibility();
-        toggleUppercase('h1', true); // Activa mayúsculas en H1
-        toggleUppercase('h2', true); // Activa mayúsculas en H2
-        toggleUppercase('h3', true); // Activa mayúsculas en H3
-        toggleUppercase('h4', true); // Activa mayúsculas en H4
-        toggleUppercase('h5', true); // Activa mayúsculas en H5
-        toggleUppercase('selectFileButton', true); // Activa mayúsculas en el botón de selección de archivo
-    });
+    document.addEventListener('DOMContentLoaded', updateVisibility);
 
     document.getElementById('selectFileButton').addEventListener('click', function() {
         document.getElementById('fileInput').click();
@@ -205,11 +173,14 @@
 
         let fileName = selectedFile.name;
         fileName = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
-        document.getElementById('h3').textContent = fileName;
+        document.getElementById('fileName').textContent = fileName;
 
-        document.querySelectorAll('.link-container').forEach(link => link.remove());
+        // Limpiar los contenidos anteriores
+        document.getElementById('links').innerHTML = '';
+        document.getElementById('linkIndex').innerHTML = '';
+        document.getElementById('linkCount').textContent = '[0]';
 
-       if (selectedFile) {
+        if (selectedFile) {
             const reader = new FileReader();
 
             reader.onload = function(e) {
@@ -229,16 +200,16 @@
                         const urlWithoutProtocol = url.replace(/https?:\/\/(www\.)?/, '');
                         const shortUrl = urlWithoutProtocol.split('/')[0]; // Solo la primera barra
                         return `
-                        <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 10px;">
+                        <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 3px;">
                             ${showNumbering === 'yes' ? `<span class="link-number">${index + 1}.</span>` : ''}
                             <a class="break-all" href="${url}" target="_blank">${url}</a>
                         </div>`;
                     }).join('');
 
-                    document.getElementById('content').innerHTML += linksHTML;
+                    document.getElementById('links').innerHTML = linksHTML;
 
                     // Actualiza el h4 con la cantidad de enlaces en formato [número]
-                    document.getElementById('h4').textContent = `[${links.length}]`;
+                    document.getElementById('linkCount').textContent = `[${links.length}]`;
 
                     // Genera el índice de enlaces
                     const baseUrls = links.reduce((acc, link) => {
@@ -253,47 +224,24 @@
                         .sort()
                         .map(baseUrl => {
                             const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
-                            return `<a href="#${shortBaseUrl}" class="index-link">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
+                            return `<a href="#${shortBaseUrl}" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
 
-                    document.getElementById('h5').innerHTML = `Índice [${links.length}]<div style="margin-top: 5px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: 10px;"></div>`;
+                    document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
 
                     const linkContainers = document.querySelectorAll('.link-container');
                     linkContainers.forEach((container, i) => {
                         if ((i + 1) % 20 === 0) {
                             const topLink = document.createElement('a');
                             topLink.href = '#';
-                            topLink.className = 'top-link'; // Clase básica para el enlace
-
-                            let shouldEnableUppercase = true; // Cambia a false para desactivar las mayúsculas
-                            if (shouldEnableUppercase) {
-                                topLink.classList.add('uppercase-text'); // Activa mayúsculas en el enlace "Volver al principio"
-                            }
-
-                            topLink.innerHTML = '&#8593; Volver al principio';
+                            topLink.className = 'top-link';
+                            topLink.innerHTML = '#######';
                             container.insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
                         }
                     });
 
                     updateVisibility(); // Actualizar visibilidad de encabezados
-
-                    // Aplicar estilos de mayúsculas directamente desde el código
-                    toggleUppercase('h1', true); // Mayúsculas en H1
-                    toggleUppercase('h2', true); // Mayúsculas en H2
-                    toggleUppercase('h3', true); // Mayúsculas en H3
-                    toggleUppercase('h4', true); // Mayúsculas en H4
-                    toggleUppercase('h5', true); // Mayúsculas en H5
-                    toggleUppercase('selectFileButton', true); // Mayúsculas en el botón de selección de archivo
-
-                    // Controlar mayúsculas en el índice
-                    toggleUppercase('h5', true); // Cambia a false para desactivar las mayúsculas en el índice
-
-                    // Controlar mayúsculas en los enlaces del índice
-                    const linkElements = document.querySelectorAll('.index-link');
-                    linkElements.forEach(link => {
-                        link.classList.add('uppercase-text'); // Aplicar directamente la clase
-                    });
                 }
             };
 
