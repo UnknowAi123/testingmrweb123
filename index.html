@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mr.Web!</title>
     <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Evitar desplazamiento horizontal en la página */
+        }
+
         body {
             background-color: SeaGreen;
-            overflow-x: hidden; /* Previene el desplazamiento lateral */
             width: 100%;
             box-sizing: border-box;
             margin: 0;
@@ -78,12 +85,16 @@
         .link-container {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
-            padding: 0;  /* Asegurarse de que no hay padding */
+            margin-bottom: 5px;
+            padding: 0;
         }
 
         .link-container a {
-            line-height: 1.2;  /* Ajuste la altura de línea según sea necesario */
+            line-height: 1.2;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            display: inline-block;
+            max-width: 100%;
         }
 
         .top-link {
@@ -127,10 +138,9 @@
             margin-bottom: 20px;
         }
 
-        /* Asegurarse de que no hay margen superior no deseado en el contenedor principal */
         #content {
             margin-top: 0;
-            text-align: left; /* Alineación a la izquierda */
+            text-align: left;
         }
 
         #links {
@@ -138,16 +148,16 @@
         }
 
         .container {
-            max-width: 100vw; /* Asegura que el contenido no se desborde */
+            max-width: 100vw;
             box-sizing: border-box;
-            overflow: hidden;
-            margin-left: 10px; /* Añadir margen izquierdo */
-            margin-right: 10px; /* Añadir margen derecho */
+            overflow-x: hidden;
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
         img, iframe, video {
             max-width: 100%;
-            height: auto; /* Asegura que las imágenes y otros elementos se ajusten correctamente */
+            height: auto;
         }
     </style>
 </head>
@@ -307,4 +317,3 @@
 </script>
 </body>
 </html>
-
