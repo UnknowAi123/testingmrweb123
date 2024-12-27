@@ -41,45 +41,45 @@
             font-family: Georgia, serif;
             font-weight: normal;
             font-style: normal;
-            text-decoration: none;
+            text-decoration: none.
         }
 
         .minorheader-text {
-            color: green;
-            font-size: 16px;
-            font-family: "Times New Roman", serif;
-            font-weight: normal;
-            font-style: normal;
-            text-decoration: none;
-            text-align: center;
+            color: green.
+            font-size: 16px.
+            font-family: "Times New Roman", serif.
+            font-weight: normal.
+            font-style: normal.
+            text-decoration: none.
+            text-align: center.
         }
 
         .additional-header-text {
-            color: yellow;
-            text-align: left;
-            font-size: 24px;
-            font-family: Arial, sans-serif;
-            font-weight: normal;
-            font-style: normal;
-            text-decoration: none;
+            color: yellow.
+            text-align: left.
+            font-size: 24px.
+            font-family: Arial, sans-serif.
+            font-weight: normal.
+            font-style: normal.
+            text-decoration: none.
         }
 
         a {
-            color: black;
-            font-size: 14px;
-            font-family: Helvetica, sans-serif;
-            text-decoration: none;
+            color: black.
+            font-size: 14px.
+            font-family: Helvetica, sans-serif.
+            text-decoration: none.
             word-wrap: break-word; /* Asegura que las palabras largas se dividan y se ajusten al ancho */
             overflow-wrap: break-word; /* Para compatibilidad con navegadores más antiguos */
         }
 
         a:visited {
-            color: black;
+            color: black.
         }
 
         .link-container {
-            display: flex;
-            align-items: flex-start;
+            display: flex.
+            align-items: flex-start.
             margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
             padding: 0;  /* Asegurarse de que no hay padding */
             max-width: 100%; /* Asegura que el contenido no se desborde */
@@ -91,66 +91,66 @@
         }
 
         .top-link {
-            color: orange;
-            text-align: center;
-            font-size: 26px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            font-style: normal;
-            text-decoration: none;
-            margin-top: 10px;
+            color: orange.
+            text-align: center.
+            font-size: 26px.
+            font-family: Arial, sans-serif.
+            font-weight: bold.
+            font-style: normal.
+            text-decoration: none.
+            margin-top: 10px.
         }
 
         .top-link:visited {
-            color: darkorange;
+            color: darkorange.
         }
 
         .button1 {
-            background-color: #4CAF50;
-            color: white;
-            width: 200px;
-            height: 50px;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            font-family: Tahoma, sans-serif;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            border: 2px solid #4CAF50;
-            box-sizing: border-box;
+            background-color: #4CAF50.
+            color: white.
+            width: 200px.
+            height: 50px.
+            padding: 10px.
+            text-align: center.
+            text-decoration: none.
+            display: inline-block.
+            font-size: 16px.
+            font-family: Tahoma, sans-serif.
+            margin: 4px 2px.
+            cursor: pointer.
+            border-radius: 4px.
+            border: 2px solid #4CAF50.
+            box-sizing: border-box.
         }
 
         .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            display: flex.
+            flex-direction: column.
+            align-items: center.
+            gap: 10px.
+            margin-bottom: 20px.
         }
 
         /* Asegurarse de que no hay margen superior no deseado en el contenedor principal */
         #content {
-            margin-top: 0;
+            margin-top: 0.
             text-align: left; /* Alineación a la izquierda */
         }
 
         #links {
-            margin-bottom: 20px;
+            margin-bottom: 20px.
         }
 
         .container {
             max-width: 100vw; /* Asegura que el contenido no se desborde */
-            box-sizing: border-box;
-            overflow: hidden;
+            box-sizing: border-box.
+            overflow: hidden.
             margin-left: 10px; /* Añadir margen izquierdo */
             margin-right: 10px; /* Añadir margen derecho */
         }
 
         img, iframe, video {
-            max-width: 100%;
+            max-width: 100%.
             height: auto; /* Asegura que las imágenes y otros elementos se ajusten correctamente */
         }
     </style>
@@ -218,7 +218,8 @@
                                 const bDomain = (new URL(b)).hostname.replace(/^www\./, '');
                                 return aDomain.localeCompare(bDomain);
                             });
-                           const linksHTML = links.map((url, index) => {
+
+                            const linksHTML = links.map((url, index) => {
                                 const urlWithoutProtocol = url.replace(/https?:\/\/(www\.)?/, '');
                                 const shortUrl = urlWithoutProtocol.split('/')[0]; // Solo la primera barra
                                 return `
@@ -246,7 +247,7 @@ const indexHTML = Object.keys(baseUrls)
     .sort()
     .map(baseUrl => {
         const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
-        return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}');" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl}.length}]</a>`;
+        return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}');" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
     })
     .join('');
 
