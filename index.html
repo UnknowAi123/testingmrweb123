@@ -228,7 +228,7 @@
                                 </div>`;
                             }).join('');
 
-                           document.getElementById('links').innerHTML = linksHTML;
+                            document.getElementById('links').innerHTML = linksHTML;
 
 // Actualiza el h4 con la cantidad de enlaces en formato [número]
 document.getElementById('linkCount').textContent = `[${links.length}]`;
@@ -280,6 +280,13 @@ document.querySelectorAll('#linkIndex a').forEach(link => {
         const targetId = link.getAttribute('href').substring(1);
         document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
     });
+});
+
+// Aviso de confirmación antes de recargar la página
+window.addEventListener('beforeunload', function (e) {
+    const confirmationMessage = '¿Estás seguro de que quieres recargar la página?';
+    e.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
+    return confirmationMessage;          // Gecko, WebKit, Chrome <34
 });
 }
 };
