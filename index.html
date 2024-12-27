@@ -2,16 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mr.Web!</title>
     <style>
         body {
             background-color: SeaGreen;
-            overflow-x: hidden; /* Previene el desplazamiento lateral */
-            width: 100%;
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         .page-title {
@@ -41,136 +36,132 @@
             font-family: Georgia, serif;
             font-weight: normal;
             font-style: normal;
-            text-decoration: none.
+            text-decoration: none;
         }
 
         .minorheader-text {
             color: green;
             font-size: 16px;
             font-family: "Times New Roman", serif;
-            font-weight: normal.
-            font-style: normal.
-            text-decoration: none.
-            text-align: center.
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+            text-align: center;
         }
 
         .additional-header-text {
-            color: yellow.
-            text-align: left.
-            font-size: 24px.
-            font-family: Arial, sans-serif.
-            font-weight: normal.
-            font-style: normal.
-            text-decoration: none.
+            color: yellow;
+            text-align: left;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
         }
 
         a {
-            color: black.
-            font-size: 14px.
-            font-family: Helvetica, sans-serif.
-            text-decoration: none.
+            color: black;
+            font-size: 14px;
+            font-family: Helvetica, sans-serif;
         }
 
         a:visited {
-            color: black.
+            color: aquamarine;
         }
 
         .link-container {
-            display: flex.
-            align-items: flex-start.
-            margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 5px;
             padding: 0;  /* Asegurarse de que no hay padding */
-            word-wrap: break-word; /* Permite que el texto se ajuste y no se desborde */
-            overflow-wrap: break-word; /* Asegura que el contenido no se desborde */
-            white-space: normal; /* Permite que el texto se ajuste a múltiples líneas */
-            max-width: 100%; /* Asegura que no se desborde el contenedor */
         }
 
         .link-container a {
-            line-height: 1.2;  /* Ajuste la altura de línea según sea necesario */
-            word-break: break-word; /* Permite que las palabras largas se corten y ajusten a la siguiente línea */
-            white-space: normal; /* Asegura que el texto se ajuste a múltiples líneas */
+            line-height: 1.2;
         }
 
         .top-link {
-            color: orange.
-            text-align: center.
-            font-size: 26px.
-            font-family: Arial, sans-serif.
-            font-weight: bold.
-            font-style: normal.
-            text-decoration: none.
-            margin-top: 10px.
+            color: orange;
+            text-align: center;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: none;
+            margin-top: 10px;
         }
 
         .top-link:visited {
-            color: darkorange.
+            color: darkorange;
         }
 
         .button1 {
-            background-color: #4CAF50.
-            color: white.
-            width: 200px.
-            height: 50px.
-            padding: 10px.
-            text-align: center.
-            text-decoration: none.
-            display: inline-block.
-            font-size: 16px.
-            font-family: Tahoma, sans-serif.
-            margin: 4px 2px.
-            cursor: pointer.
-            border-radius: 4px.
-            border: 2px solid #4CAF50.
-            box-sizing: border-box.
+            background-color: #4CAF50;
+            color: white;
+            width: 200px;
+            height: 50px;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-family: Tahoma, sans-serif;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 2px solid #4CAF50;
+            box-sizing: border-box;
         }
 
         .button-container {
-            display: flex.
-            flex-direction: column.
-            align-items: center.
-            gap: 10px.
-            margin-bottom: 20px.
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         /* Asegurarse de que no hay margen superior no deseado en el contenedor principal */
         #content {
-            margin-top: 0.
-            text-align: left; /* Alineación a la izquierda */
+            margin-top: 0;
         }
 
-        #links {
-            margin-bottom: 20px.
+        /* Estilos personalizados para el índice */
+        .index-link {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: black;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        .container {
-            max-width: 100vw; /* Asegura que el contenido no se desborde */
-            box-sizing: border-box.
-            overflow: hidden.
-            margin-left: 10px; /* Añadir margen izquierdo */
-            margin-right: 10px; /* Añadir margen derecho */
+        .index-link:hover {
+            color: blue;
+            text-decoration: underline;
         }
 
-        img, iframe, video {
-            max-width: 100%.
-            height: auto; /* Asegura que las imágenes y otros elementos se ajusten correctamente */
+        /* Estilo para mostrar texto en mayúsculas */
+        .uppercase-text {
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-    <h1 class="page-title">Mr.Web!</h1>
-    <h2 class="header-text">Encabezado del Contenido</h2>
+    <h1 class="page-title" id="h1">Mr.Web!</h1>
+    <h2 class="header-text" id="h2">Encabezado del Contenido</h2>
 
     <div class="button-container">
         <button class="button1" id="selectFileButton">Seleccionar Archivo</button>
         <input type="file" id="fileInput" accept=".txt" style="display:none;">
     </div>
 
-    <div id="content" class="container">
-        <h3 class="subheader-text" id="fileName">#######</h3>
-        <h4 class="minorheader-text" id="linkCount">[0]</h4>
-        <h5 class="additional-header-text" id="linkIndex"></h5>
-        <div id="links"></div>
+    <div id="content">
+        <h3 class="subheader-text" id="h3">#######</h3>
+        <h4 class="minorheader-text" id="h4">[0]</h4>
+        <h5 class="additional-header-text" id="h5"></h5>
+    </div>
+
 <script>
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
@@ -185,7 +176,24 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', updateVisibility);
+    function toggleUppercase(elementId, shouldEnable) {
+        const element = document.getElementById(elementId);
+        if (shouldEnable) {
+            element.classList.add('uppercase-text');
+        } else {
+            element.classList.remove('uppercase-text');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateVisibility();
+        toggleUppercase('h1', true); // Activa mayúsculas en H1
+        toggleUppercase('h2', true); // Activa mayúsculas en H2
+        toggleUppercase('h3', true); // Activa mayúsculas en H3
+        toggleUppercase('h4', true); // Activa mayúsculas en H4
+        toggleUppercase('h5', true); // Activa mayúsculas en H5
+        toggleUppercase('selectFileButton', true); // Activa mayúsculas en el botón de selección de archivo
+    });
 
     document.getElementById('selectFileButton').addEventListener('click', function() {
         document.getElementById('fileInput').click();
@@ -197,14 +205,11 @@
 
         let fileName = selectedFile.name;
         fileName = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
-        document.getElementById('fileName').textContent = fileName;
+        document.getElementById('h3').textContent = fileName;
 
-        // Limpiar los contenidos anteriores
-        document.getElementById('links').innerHTML = '';
-        document.getElementById('linkIndex').innerHTML = '';
-        document.getElementById('linkCount').textContent = '[0]';
+        document.querySelectorAll('.link-container').forEach(link => link.remove());
 
-        if (selectedFile) {
+       if (selectedFile) {
             const reader = new FileReader();
 
             reader.onload = function(e) {
@@ -224,16 +229,16 @@
                         const urlWithoutProtocol = url.replace(/https?:\/\/(www\.)?/, '');
                         const shortUrl = urlWithoutProtocol.split('/')[0]; // Solo la primera barra
                         return `
-                        <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 3px;">
+                        <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 10px;">
                             ${showNumbering === 'yes' ? `<span class="link-number">${index + 1}.</span>` : ''}
-                            <a class="break-all" href="${url}" target="_blank" onclick="event.preventDefault(); window.open('${url}', '_blank');">${url}</a>
+                            <a class="break-all" href="${url}" target="_blank">${url}</a>
                         </div>`;
                     }).join('');
 
-                    document.getElementById('links').innerHTML = linksHTML;
+                    document.getElementById('content').innerHTML += linksHTML;
 
                     // Actualiza el h4 con la cantidad de enlaces en formato [número]
-                    document.getElementById('linkCount').textContent = `[${links.length}]`;
+                    document.getElementById('h4').textContent = `[${links.length}]`;
 
                     // Genera el índice de enlaces
                     const baseUrls = links.reduce((acc, link) => {
@@ -248,40 +253,46 @@
                         .sort()
                         .map(baseUrl => {
                             const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
-                            return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}');" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
+                            return `<a href="#${shortBaseUrl}" class="index-link">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
 
-                    document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
+                    document.getElementById('h5').innerHTML = `Índice [${links.length}]<div style="margin-top: 5px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: 10px;"></div>`;
 
                     const linkContainers = document.querySelectorAll('.link-container');
                     linkContainers.forEach((container, i) => {
                         if ((i + 1) % 20 === 0) {
                             const topLink = document.createElement('a');
-                            topLink.href = 'javascript:void(0)';
-                            topLink.className = 'top-link';
-                            topLink.innerHTML = '#######';
+                            topLink.href = '#';
+                            topLink.className = 'top-link'; // Clase básica para el enlace
+
+                            let shouldEnableUppercase = true; // Cambia a false para desactivar las mayúsculas
+                            if (shouldEnableUppercase) {
+                                topLink.classList.add('uppercase-text'); // Activa mayúsculas en el enlace "Volver al principio"
+                            }
+
+                            topLink.innerHTML = '&#8593; Volver al principio';
                             container.insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
                         }
                     });
 
                     updateVisibility(); // Actualizar visibilidad de encabezados
 
-                    // Añadir evento para los enlaces "top link"
-                    document.querySelectorAll('.top-link').forEach(link => {
-                        link.addEventListener('click', function(event) {
-                            event.preventDefault();
-                            document.querySelector('.page-title').scrollIntoView({ behavior: 'smooth' });
-                        });
-                    });
+                    // Aplicar estilos de mayúsculas directamente desde el código
+                    toggleUppercase('h1', true); // Mayúsculas en H1
+                    toggleUppercase('h2', true); // Mayúsculas en H2
+                    toggleUppercase('h3', true); // Mayúsculas en H3
+                    toggleUppercase('h4', true); // Mayúsculas en H4
+                    toggleUppercase('h5', true); // Mayúsculas en H5
+                    toggleUppercase('selectFileButton', true); // Mayúsculas en el botón de selección de archivo
 
-                    // Añadir evento para los enlaces del índice
-                    document.querySelectorAll('#linkIndex a').forEach(link => {
-                        link.addEventListener('click', function(event) {
-                            event.preventDefault();
-                            const targetId = link.getAttribute('href').substring(1);
-                            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-                        });
+                    // Controlar mayúsculas en el índice
+                    toggleUppercase('h5', true); // Cambia a false para desactivar las mayúsculas en el índice
+
+                    // Controlar mayúsculas en los enlaces del índice
+                    const linkElements = document.querySelectorAll('.index-link');
+                    linkElements.forEach(link => {
+                        link.classList.add('uppercase-text'); // Aplicar directamente la clase
                     });
                 }
             };
@@ -301,13 +312,6 @@
             showHeaders[tag] = visibility;
         }
         updateVisibility();
-    }
-
-    function scrollToSection(id) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
     }
 </script>
 </body>
