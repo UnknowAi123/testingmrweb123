@@ -7,26 +7,151 @@
     <style>
         body {
             background-color: SeaGreen;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Previene el desplazamiento lateral */
             width: 100%;
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /*... (manteniendo todos los estilos previos) ...*/
-
-        .link-container a {
-            /* Añadimos solo las propiedades necesarias para el margen */
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+        .page-title {
+            color: yellow;
+            text-align: center;
+            font-size: 48px;
+            font-family: Arial, sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
         }
 
-        /*... (el resto de los estilos permanecen igual) ...*/
+        .header-text {
+            color: red;
+            text-align: center;
+            font-size: 20px;
+            font-family: Verdana, sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        .subheader-text {
+            color: blue;
+            text-align: center;
+            font-size: 36px;
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        .minorheader-text {
+            color: green;
+            font-size: 16px;
+            font-family: "Times New Roman", serif;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .additional-header-text {
+            color: yellow;
+            text-align: left;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+        }
+
+        a {
+            color: black;
+            font-size: 14px;
+            font-family: Helvetica, sans-serif;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: black;
+        }
+
+        .link-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 5px; /* Se ha reducido el espacio entre los enlaces generados */
+            padding: 0;  /* Asegurarse de que no hay padding */
+        }
+
+        .link-container a {
+            line-height: 1.2;  /* Ajuste la altura de línea según sea necesario */
+        }
+
+        .top-link {
+            color: orange;
+            text-align: center;
+            font-size: 26px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-style: normal;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .top-link:visited {
+            color: darkorange;
+        }
+
+        .button1 {
+            background-color: #4CAF50;
+            color: white;
+            width: 200px;
+            height: 50px;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-family: Tahoma, sans-serif;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 2px solid #4CAF50;
+            box-sizing: border-box;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Asegurarse de que no hay margen superior no deseado en el contenedor principal */
+        #content {
+            margin-top: 0;
+            text-align: left; /* Alineación a la izquierda */
+        }
+
+        #links {
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 100vw; /* Asegura que el contenido no se desborde */
+            box-sizing: border-box;
+            overflow: hidden;
+            margin-left: 10px; /* Añadir margen izquierdo */
+            margin-right: 10px; /* Añadir margen derecho */
+        }
+
+        img, iframe, video {
+            max-width: 100%;
+            height: auto; /* Asegura que las imágenes y otros elementos se ajusten correctamente */
+        }
     </style>
 </head>
 <body>
-    <!-- El resto del cuerpo permanece sin cambios -->
     <h1 class="page-title">Mr.Web!</h1>
     <h2 class="header-text">Encabezado del Contenido</h2>
 
@@ -42,7 +167,6 @@
         <div id="links"></div>
     </div>
 <script>
-    // El script permanece sin cambios
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
 
@@ -84,6 +208,7 @@
                 const links = content.match(linkRegex);
 
                 if (links) {
+                    // Ordenar los enlaces teniendo en cuenta solo el texto después de "www."
                     links.sort((a, b) => {
                         const aDomain = (new URL(a)).hostname.replace(/^www\./, '');
                         const bDomain = (new URL(b)).hostname.replace(/^www\./, '');
@@ -96,14 +221,16 @@
                         return `
                         <div class="link-container" id="${shortUrl.replace(/[^\w]/g, '_')}" style="margin-top: 3px;">
                             ${showNumbering === 'yes' ? `<span class="link-number">${index + 1}.</span>` : ''}
-                            <a href="${url}" target="_blank" onclick="event.preventDefault(); window.open('${url}', '_blank');">${url}</a>
+                            <a class="break-all" href="${url}" target="_blank" onclick="event.preventDefault(); window.open('${url}', '_blank');">${url}</a>
                         </div>`;
                     }).join('');
 
                     document.getElementById('links').innerHTML = linksHTML;
 
+                    // Actualiza el h4 con la cantidad de enlaces en formato [número]
                     document.getElementById('linkCount').textContent = `[${links.length}]`;
 
+                    // Genera el índice de enlaces
                     const baseUrls = links.reduce((acc, link) => {
                         const url = new URL(link);
                         const baseUrl = url.hostname.replace(/^www\./, '').toLowerCase();
@@ -116,11 +243,11 @@
                         .sort()
                         .map(baseUrl => {
                             const shortBaseUrl = baseUrl.replace(/[^\w]/g, '_');
-                            return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}')">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
+                            return `<a href="javascript:void(0)" onclick="scrollToSection('${shortBaseUrl}');" style="margin-bottom: 5px; display: block;">${baseUrl} [${baseUrls[baseUrl].length}]</a>`;
                         })
                         .join('');
 
-                    document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]${indexHTML}`;
+                    document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
 
                     const linkContainers = document.querySelectorAll('.link-container');
                     linkContainers.forEach((container, i) => {
@@ -128,13 +255,29 @@
                             const topLink = document.createElement('a');
                             topLink.href = 'javascript:void(0)';
                             topLink.className = 'top-link';
-                            topLink.textContent = '#######';
-                            topLink.onclick = () => document.querySelector('.page-title').scrollIntoView({ behavior: 'smooth' });
-                            container.insertAdjacentElement('afterend', topLink);
+                            topLink.innerHTML = '#######';
+                            container.insertAdjacentHTML('afterend', '<div style="margin-bottom: 10px;"></div>' + topLink.outerHTML + '<div style="margin-top: 10px;"></div>');
                         }
                     });
 
-                    updateVisibility();
+                    updateVisibility(); // Actualizar visibilidad de encabezados
+
+                    // Añadir evento para los enlaces "top link"
+                    document.querySelectorAll('.top-link').forEach(link => {
+                        link.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            document.querySelector('.page-title').scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+
+                    // Añadir evento para los enlaces del índice
+                    document.querySelectorAll('#linkIndex a').forEach(link => {
+                        link.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            const targetId = link.getAttribute('href').substring(1);
+                            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
                 }
             };
 
@@ -142,10 +285,23 @@
         }
     });
 
+    document.getElementById('fileInput').addEventListener('click', function() {
+        this.value = null;
+    });
+
+    function setVisibility(tag, visibility) {
+        if (tag === 'numbering') {
+            showNumbering = visibility;
+        } else {
+            showHeaders[tag] = visibility;
+        }
+        updateVisibility();
+    }
+
     function scrollToSection(id) {
         const element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            element.scrollIntoView({ behavior: 'smooth' });
         }
     }
 </script>
