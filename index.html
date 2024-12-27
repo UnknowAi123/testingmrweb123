@@ -7,33 +7,26 @@
     <style>
         body {
             background-color: SeaGreen;
-            overflow-x: hidden; /* Previene el desplazamiento lateral */
+            overflow-x: hidden;
             width: 100%;
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* ... otros estilos ... */
+        /*... (manteniendo todos los estilos previos) ...*/
 
         .link-container a {
-            line-height: 1.2;
-            color: black;
-            font-size: 14px;
-            font-family: Helvetica, sans-serif;
-            text-decoration: none;
-            word-break: break-all; /* Añadido para forzar el quiebre de palabras largas */
-            overflow-wrap: break-word; /* Para navegadores que no soportan word-break */
-            display: inline-block; /* Asegura que se ajuste al ancho del contenedor */
-            max-width: 100%; /* No permite que el enlace se salga del contenedor */
+            /* Añadimos solo las propiedades necesarias para el margen */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
-        /* ... el resto de los estilos originales ... */
-
+        /*... (el resto de los estilos permanecen igual) ...*/
     </style>
 </head>
 <body>
-    <!-- El resto del cuerpo es igual al original -->
+    <!-- El resto del cuerpo permanece sin cambios -->
     <h1 class="page-title">Mr.Web!</h1>
     <h2 class="header-text">Encabezado del Contenido</h2>
 
@@ -49,7 +42,7 @@
         <div id="links"></div>
     </div>
 <script>
-    // El script es igual al original
+    // El script permanece sin cambios
     let showHeaders = { h1: 'yes', h2: 'none', h3: 'yes', h4: 'none', h5: 'yes' };
     let showNumbering = 'none';
 
