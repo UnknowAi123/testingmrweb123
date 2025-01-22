@@ -114,7 +114,7 @@
             });
         }
 
-        function descargarImagenes() {
+        async function descargarImagenes() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const zip = new JSZip();
             const promises = [];
