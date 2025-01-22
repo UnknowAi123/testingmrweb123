@@ -23,15 +23,20 @@
         }
         .image-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
         }
         .image-item img {
             max-width: 100px;
-            margin-right: 10px;
+            max-height: 60px;
+            object-fit: contain;
+            margin-bottom: 5px;
         }
         .image-info {
-            margin-right: 10px;
+            text-align: center;
         }
     </style>
 </head>
@@ -61,10 +66,6 @@
             return parser.parseFromString(html, 'text/html');
         }
 
-        function obtenerUrlImagen(element) {
-            return element.src || element.href;
-        }
-
         async function buscarImagenes() {
             const url = document.getElementById('url-input').value;
             const html = await fetchHTML(url);
@@ -74,35 +75,31 @@
             }
 
             const doc = parseHTML(html);
-            const imageElements = [
-                ...doc.querySelectorAll('img'),
-                ...doc.querySelectorAll('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".gif"]'),
-                ...doc.querySelectorAll('a[href$=".jpg"] img, a[href$=".jpeg"] img, a[href$=".png"] img, a[href$=".gif"] img')
-            ];
+            const linkElements = doc.querySelectorAll('a');
             const resultados = document.getElementById('resultados');
             resultados.innerHTML = '';
 
             const imagenesUnicas = new Set();
-            imageElements.forEach((element, index) => {
-                const src = obtenerUrlImagen(element);
-                if (src && !imagenesUnicas.has(src)) {
-                    imagenesUnicas.add(src);
+            for (const link of linkElements) {
+                const href = link.href;
+                if (!imagenesUnicas.has(href) && (href.endsWith('.jpg') || href.endsWith('.jpeg') || href.endsWith('.png') || href.endsWith('.gif'))) {
+                    imagenesUnicas.add(href);
 
                     const image = new Image();
-                    image.src = src;
+                    image.src = href;
                     image.onload = () => {
                         const div = document.createElement('div');
                         div.className = 'image-item';
 
                         const img = document.createElement('img');
-                        img.src = src;
-                        img.alt = `imagen-${index}`;
+                        img.src = href;
+                        img.alt = `imagen-${imagenesUnicas.size}`;
 
                         const info = document.createElement('div');
                         info.className = 'image-info';
                         info.innerHTML = `
-                            <div>Nombre: ${src.split('/').pop()}</div>
-                            <div>Formato: ${src.split('.').pop()}</div>
+                            <div>Nombre: ${href.split('/').pop()}</div>
+                            <div>Formato: ${href.split('.').pop()}</div>
                             <div>Resolución: ${image.width}x${image.height}</div>
                         `;
 
@@ -115,7 +112,7 @@
                         resultados.appendChild(div);
                     };
                 }
-            });
+            }
         }
 
         async function descargarImagenes() {
@@ -127,7 +124,7 @@
             const zip = new JSZip();
             const promises = [];
 
-            checkboxes.forEach(checkbox => {
+            for (const checkbox of checkboxes) {
                 const img = checkbox.previousSibling.previousSibling;
                 const filename = img.src.split('/').pop();
                 promises.push(fetch(img.src)
@@ -135,7 +132,7 @@
                     .then(blob => {
                         zip.file(filename, blob);
                     }));
-            });
+            }
 
             Promise.all(promises).then(() => {
                 zip.generateAsync({type: 'blob'}).then(content => {
