@@ -85,53 +85,43 @@
             linkElements.forEach((element, index) => {
                 const href = element.href;
 
-                const div = document.createElement('div');
-                div.className = 'link-item';
+                if (href.includes(url)) {
+                    const div = document.createElement('div');
+                    div.className = 'link-item';
 
-                const link = document.createElement('a');
-                link.href = href;
-                link.textContent = href;
-                link.target = '_blank';
+                    const link = document.createElement('a');
+                    link.href = href;
+                    link.textContent = href;
+                    link.target = '_blank';
 
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = href;
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = href;
 
-                div.appendChild(link);
-                div.appendChild(checkbox);
-                resultados.appendChild(div);
+                    div.appendChild(link);
+                    div.appendChild(checkbox);
+                    resultados.appendChild(div);
+                }
             });
         }
 
-        async function descargarSeleccionados() {
+        function descargarSeleccionados() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             if (checkboxes.length === 0) {
                 alert("No se seleccionaron enlaces para descargar.");
                 return;
             }
-            const zip = new JSZip();
-            const promises = [];
 
             checkboxes.forEach(checkbox => {
                 const href = checkbox.value;
-                const filename = href.split('/').pop();
-                promises.push(fetch(href)
-                    .then(response => response.blob())
-                    .then(blob => {
-                        zip.file(filename, blob);
-                    }));
-            });
-
-            Promise.all(promises).then(() => {
-                zip.generateAsync({type: 'blob'}).then(content => {
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(content);
-                    link.download = 'enlaces.zip';
-                    link.click();
-                });
+                const link = document.createElement('a');
+                link.href = href;
+                link.download = href.split('/').pop();
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             });
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
 </body>
 </html>
