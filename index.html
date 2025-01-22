@@ -120,6 +120,10 @@
 
         async function descargarImagenes() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) {
+                alert("No se seleccionaron imágenes para descargar.");
+                return;
+            }
             const zip = new JSZip();
             const promises = [];
 
