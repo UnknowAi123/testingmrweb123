@@ -13,7 +13,7 @@
                 const data = await response.json();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(data.contents, 'text/html');
-                const links = Array.from(doc.querySelectorAll('a')).map(a => a.href);
+                const links = Array.from(doc.querySelectorAll('a')).map(a => new URL(a.getAttribute('href'), url).href);
                 displayLinks(links);
             } catch (error) {
                 console.error('Error fetching links:', error);
