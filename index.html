@@ -14,7 +14,7 @@
             text-align: center;
         }
         .container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
         }
         .image-list {
@@ -74,7 +74,9 @@
             }
 
             const doc = parseHTML(html);
-            const imageElements = [...doc.querySelectorAll('a[href*="https://en.m.uesp.net/wiki/File:"]')];
+            const imageElements = [
+                ...doc.querySelectorAll('a[href*="https://en.m.uesp.net/wiki/File:"], a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".bmp"], a[href$=".gif"]')
+            ];
             const resultados = document.getElementById('resultados');
             resultados.innerHTML = '';
 
@@ -109,8 +111,12 @@
             });
         }
 
-        function descargarImagenes() {
+        async function descargarImagenes() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) {
+                alert("No se seleccionaron imágenes para descargar.");
+                return;
+            }
             const zip = new JSZip();
             const promises = [];
 
