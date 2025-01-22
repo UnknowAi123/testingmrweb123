@@ -42,25 +42,30 @@
     </form>
 
     <script>
-        function fetchLinks() {
+        async function fetchLinks() {
             const url = document.getElementById('urlInput').value;
 
-            // Aquí deberías implementar la lógica para buscar enlaces descargables en la URL
-            // Esto es solo un ejemplo simple
-            const links = [
-                `${url}/archivo1.zip`,
-                `${url}/archivo2.zip`
-            ];
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                const links = Array.from(doc.querySelectorAll('a'))
+                    .map(link => link.href)
+                    .filter(href => href.startsWith('http'));
 
-            const container = document.getElementById('linksContainer');
-            container.innerHTML = '';
-            links.forEach(link => {
-                const a = document.createElement('a');
-                a.href = link;
-                a.textContent = link;
-                container.appendChild(a);
-                container.appendChild(document.createElement('br'));
-            });
+                const container = document.getElementById('linksContainer');
+                container.innerHTML = '';
+                links.forEach(link => {
+                    const a = document.createElement('a');
+                    a.href = link;
+                    a.textContent = link;
+                    container.appendChild(a);
+                    container.appendChild(document.createElement('br'));
+                });
+            } catch (error) {
+                console.error('Error al buscar la URL:', error);
+            }
         }
 
         function downloadFiles() {
