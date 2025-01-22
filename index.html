@@ -250,7 +250,7 @@ const indexHTML = Object.keys(baseUrls)
     })
     .join('');
 
-document.getElementById('linkIndex').innerHTML = `Índice [${links.length}]<div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
+document.getElementById('linkIndex').innerHTML = `<span style="font-family: 'Georgia', serif;">Índice [${links.length}]</span><div style="margin-top: 12px; margin-bottom: 0;"></div>${indexHTML}<div style="margin-bottom: -10px;"></div>`;
 
 const linkContainers = document.querySelectorAll('.link-container');
 linkContainers.forEach((container, i) => {
