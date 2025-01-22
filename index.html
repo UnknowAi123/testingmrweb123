@@ -3,82 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador y Descargador de Enlaces</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            margin: 20px 0;
-        }
-
-        #linksContainer {
-            margin-top: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 100px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Buscador y Descargador de Enlaces</h1>
-    <form id="urlForm">
-        <input type="text" id="urlInput" placeholder="Introduce la URL">
-        <button type="button" onclick="fetchLinks()">Buscar enlaces</button>
-    </form>
-    <div id="linksContainer"></div>
-
-    <form id="downloadForm">
-        <textarea id="linksInput" placeholder="Introduce los enlaces, uno por línea"></textarea>
-        <button type="button" onclick="downloadFiles()">Descargar archivos</button>
-    </form>
-
+    <title>URL Link Extractor</title>
     <script>
         async function fetchLinks() {
             const url = document.getElementById('urlInput').value;
-
             try {
                 const response = await fetch(url);
                 const text = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'text/html');
-                const links = Array.from(doc.querySelectorAll('a'))
-                    .map(link => link.href)
-                    .filter(href => href.startsWith('http'));
-
-                const container = document.getElementById('linksContainer');
-                container.innerHTML = '';
-                links.forEach(link => {
-                    const a = document.createElement('a');
-                    a.href = link;
-                    a.textContent = link;
-                    container.appendChild(a);
-                    container.appendChild(document.createElement('br'));
-                });
+                const links = Array.from(doc.querySelectorAll('a')).map(a => a.href);
+                displayLinks(links);
             } catch (error) {
-                console.error('Error al buscar la URL:', error);
+                console.error('Error fetching links:', error);
             }
         }
 
-        function downloadFiles() {
-            const links = document.getElementById('linksInput').value.split('\n');
+        function displayLinks(links) {
+            const linksList = document.getElementById('linksList');
+            linksList.innerHTML = '';
             links.forEach(link => {
-                const a = document.createElement('a');
-                a.href = link;
-                a.download = '';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                const listItem = document.createElement('li');
+                listItem.textContent = link;
+                linksList.appendChild(listItem);
             });
         }
     </script>
+</head>
+<body>
+    <h1>Extracción de Enlaces de URL</h1>
+    <input type="text" id="urlInput" placeholder="Introduce una URL" />
+    <button onclick="fetchLinks()">Buscar Enlaces</button>
+    <ul id="linksList"></ul>
 </body>
 </html>
