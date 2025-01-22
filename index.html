@@ -30,6 +30,9 @@
             display: block;
             margin-bottom: 5px;
         }
+        .image-info {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +90,12 @@
                     img.alt = `imagen-${index}`;
 
                     const info = document.createElement('div');
-                    info.textContent = `${src.split('/').pop().slice(0, 10)}... (${image.width}x${image.height})`;
+                    info.className = 'image-info';
+                    info.innerHTML = `
+                        <div>Nombre: ${src.split('/').pop()}</div>
+                        <div>Formato: ${src.split('.').pop()}</div>
+                        <div>Resolución: ${image.width}x${image.height}</div>
+                    `;
 
                     div.appendChild(checkbox);
                     div.appendChild(img);
