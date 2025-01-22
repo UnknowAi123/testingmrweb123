@@ -22,16 +22,16 @@
             flex-wrap: wrap;
         }
         .image-item {
+            display: flex;
+            align-items: center;
             margin: 10px;
-            text-align: center;
         }
         .image-item img {
             max-width: 100px;
-            display: block;
-            margin-bottom: 5px;
+            margin-right: 10px;
         }
         .image-info {
-            margin-bottom: 10px;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -82,9 +82,6 @@
                     const div = document.createElement('div');
                     div.className = 'image-item';
 
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-
                     const img = document.createElement('img');
                     img.src = src;
                     img.alt = `imagen-${index}`;
@@ -97,9 +94,12 @@
                         <div>Resolución: ${image.width}x${image.height}</div>
                     `;
 
-                    div.appendChild(checkbox);
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+
                     div.appendChild(img);
                     div.appendChild(info);
+                    div.appendChild(checkbox);
                     resultados.appendChild(div);
                 };
             });
@@ -108,11 +108,13 @@
         function descargarImagenes() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             checkboxes.forEach(checkbox => {
-                const img = checkbox.nextSibling;
+                const img = checkbox.previousSibling.previousSibling;
                 const link = document.createElement('a');
                 link.href = img.src;
                 link.download = img.alt;
+                document.body.appendChild(link);
                 link.click();
+                document.body.removeChild(link);
             });
         }
     </script>
