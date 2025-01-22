@@ -30,9 +30,16 @@
             padding: 10px;
             width: 100%;
         }
+        .link-item img {
+            max-width: 80px;
+            max-height: 60px;
+            object-fit: contain;
+            margin-right: 10px;
+        }
         .link-info {
             margin-right: 10px;
             word-break: break-all;
+            flex-grow: 1;
         }
     </style>
 </head>
@@ -42,6 +49,7 @@
         <input type="text" id="url-input" placeholder="Introduce una URL">
         <button onclick="buscarEnlaces()">Buscar</button>
         <div id="resultados" class="link-list"></div>
+        <button onclick="descargarSeleccionados()">Descargar Seleccionados</button>
     </div>
 
     <script>
@@ -61,6 +69,29 @@
             return parser.parseFromString(html, 'text/html');
         }
 
+        function obtenerIcono(tipo) {
+            switch(tipo) {
+                case 'imagen':
+                    return 'https://via.placeholder.com/80x60?text=IMG';
+                case 'audio':
+                    return 'https://via.placeholder.com/80x60?text=AUD';
+                case 'web':
+                    return 'https://via.placeholder.com/80x60?text=WEB';
+                default:
+                    return 'https://via.placeholder.com/80x60?text=LINK';
+            }
+        }
+
+        function determinarTipo(href) {
+            if (href.match(/\.(jpeg|jpg|gif|png|bmp)$/i)) {
+                return 'imagen';
+            } else if (href.match(/\.(mp3|wav|ogg)$/i)) {
+                return 'audio';
+            } else {
+                return 'web';
+            }
+        }
+
         async function buscarEnlaces() {
             const url = document.getElementById('url-input').value;
             const html = await fetchHTML(url);
@@ -76,9 +107,15 @@
 
             linkElements.forEach((element, index) => {
                 const href = element.href;
+                const tipo = determinarTipo(href);
+                const iconoSrc = obtenerIcono(tipo);
 
                 const div = document.createElement('div');
                 div.className = 'link-item';
+
+                const img = document.createElement('img');
+                img.src = iconoSrc;
+                img.alt = tipo;
 
                 const link = document.createElement('a');
                 link.href = href;
@@ -89,11 +126,46 @@
                 info.className = 'link-info';
                 info.textContent = href;
 
-                div.appendChild(link);
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+
+                div.appendChild(img);
                 div.appendChild(info);
+                div.appendChild(checkbox);
                 resultados.appendChild(div);
             });
         }
+
+        function descargarSeleccionados() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) {
+                alert("No se seleccionaron enlaces para descargar.");
+                return;
+            }
+            const zip = new JSZip();
+            const promises = [];
+
+            checkboxes.forEach(checkbox => {
+                const linkInfo = checkbox.previousSibling;
+                const href = linkInfo.textContent;
+                const filename = href.split('/').pop();
+                promises.push(fetch(href)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        zip.file(filename, blob);
+                    }));
+            });
+
+            Promise.all(promises).then(() => {
+                zip.generateAsync({type: 'blob'}).then(content => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = 'enlaces.zip';
+                    link.click();
+                });
+            });
+        }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
 </body>
 </html>
