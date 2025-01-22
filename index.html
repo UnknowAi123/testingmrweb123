@@ -74,14 +74,18 @@
             }
 
             const doc = parseHTML(html);
-            const imageElements = [...doc.querySelectorAll('img[src*=".jpg"], img[src*=".jpeg"], img[src*=".png"], img[src*=".gif"], a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]')];
+            const imageElements = [
+                ...doc.querySelectorAll('img'),
+                ...doc.querySelectorAll('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".gif"]'),
+                ...doc.querySelectorAll('a[href$=".jpg"] img, a[href$=".jpeg"] img, a[href$=".png"] img, a[href$=".gif"] img')
+            ];
             const resultados = document.getElementById('resultados');
             resultados.innerHTML = '';
 
             const imagenesUnicas = new Set();
             imageElements.forEach((element, index) => {
                 const src = obtenerUrlImagen(element);
-                if (!imagenesUnicas.has(src)) {
+                if (src && !imagenesUnicas.has(src)) {
                     imagenesUnicas.add(src);
 
                     const image = new Image();
@@ -114,7 +118,7 @@
             });
         }
 
-        function descargarImagenes() {
+        async function descargarImagenes() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             const zip = new JSZip();
             const promises = [];
