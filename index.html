@@ -23,20 +23,19 @@
         }
         .image-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
             margin: 10px;
             border: 1px solid #ddd;
             padding: 10px;
         }
         .image-item img {
-            max-width: 100px;
-            max-height: 60px;
+            max-width: 80px;
+            max-height: 40px;
             object-fit: contain;
-            margin-bottom: 5px;
+            margin-right: 10px;
         }
         .image-info {
-            text-align: center;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -75,56 +74,47 @@
             }
 
             const doc = parseHTML(html);
-            const linkElements = doc.querySelectorAll('a');
+            const imageElements = [...doc.querySelectorAll('a[href*="https://en.m.uesp.net/wiki/File:"]')];
             const resultados = document.getElementById('resultados');
             resultados.innerHTML = '';
 
-            const imagenesUnicas = new Set();
-            for (const link of linkElements) {
-                const href = link.href;
-                if (!imagenesUnicas.has(href) && (href.endsWith('.jpg') || href.endsWith('.jpeg') || href.endsWith('.png') || href.endsWith('.gif'))) {
-                    imagenesUnicas.add(href);
+            imageElements.forEach((element, index) => {
+                const src = element.href;
+                const image = new Image();
+                image.src = src;
+                image.onload = () => {
+                    const div = document.createElement('div');
+                    div.className = 'image-item';
 
-                    const image = new Image();
-                    image.src = href;
-                    image.onload = () => {
-                        const div = document.createElement('div');
-                        div.className = 'image-item';
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = `imagen-${index}`;
 
-                        const img = document.createElement('img');
-                        img.src = href;
-                        img.alt = `imagen-${imagenesUnicas.size}`;
+                    const info = document.createElement('div');
+                    info.className = 'image-info';
+                    info.innerHTML = `
+                        <div>Nombre: ${src.split('/').pop()}</div>
+                        <div>Formato: ${src.split('.').pop()}</div>
+                        <div>Resolución: ${image.width}x${image.height}</div>
+                    `;
 
-                        const info = document.createElement('div');
-                        info.className = 'image-info';
-                        info.innerHTML = `
-                            <div>Nombre: ${href.split('/').pop()}</div>
-                            <div>Formato: ${href.split('.').pop()}</div>
-                            <div>Resolución: ${image.width}x${image.height}</div>
-                        `;
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
 
-                        const checkbox = document.createElement('input');
-                        checkbox.type = 'checkbox';
-
-                        div.appendChild(img);
-                        div.appendChild(info);
-                        div.appendChild(checkbox);
-                        resultados.appendChild(div);
-                    };
-                }
-            }
+                    div.appendChild(img);
+                    div.appendChild(info);
+                    div.appendChild(checkbox);
+                    resultados.appendChild(div);
+                };
+            });
         }
 
-        async function descargarImagenes() {
+        function descargarImagenes() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkboxes.length === 0) {
-                alert("No se seleccionaron imágenes para descargar.");
-                return;
-            }
             const zip = new JSZip();
             const promises = [];
 
-            for (const checkbox of checkboxes) {
+            checkboxes.forEach(checkbox => {
                 const img = checkbox.previousSibling.previousSibling;
                 const filename = img.src.split('/').pop();
                 promises.push(fetch(img.src)
@@ -132,7 +122,7 @@
                     .then(blob => {
                         zip.file(filename, blob);
                     }));
-            }
+            });
 
             Promise.all(promises).then(() => {
                 zip.generateAsync({type: 'blob'}).then(content => {
