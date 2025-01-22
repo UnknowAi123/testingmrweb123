@@ -14,7 +14,7 @@
             text-align: center;
         }
         .container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
         }
         .link-list {
@@ -108,7 +108,7 @@
             linkElements.forEach((element, index) => {
                 const href = element.href;
                 const tipo = determinarTipo(href);
-                const iconoSrc = obtenerIcono(tipo);
+                const iconoSrc = tipo === 'imagen' ? href : obtenerIcono(tipo);
 
                 const div = document.createElement('div');
                 div.className = 'link-item';
@@ -117,17 +117,16 @@
                 img.src = iconoSrc;
                 img.alt = tipo;
 
-                const link = document.createElement('a');
-                link.href = href;
-                link.textContent = href;
-                link.target = '_blank';
-
                 const info = document.createElement('div');
                 info.className = 'link-info';
-                info.textContent = href;
+                info.innerHTML = `
+                    <div>Nombre: ${href.split('/').pop()}</div>
+                    <div>Formato: ${href.split('.').pop()}</div>
+                `;
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
+                checkbox.value = href;
 
                 div.appendChild(img);
                 div.appendChild(info);
@@ -136,7 +135,7 @@
             });
         }
 
-        function descargarSeleccionados() {
+        async function descargarSeleccionados() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
             if (checkboxes.length === 0) {
                 alert("No se seleccionaron enlaces para descargar.");
@@ -146,8 +145,7 @@
             const promises = [];
 
             checkboxes.forEach(checkbox => {
-                const linkInfo = checkbox.previousSibling;
-                const href = linkInfo.textContent;
+                const href = checkbox.value;
                 const filename = href.split('/').pop();
                 promises.push(fetch(href)
                     .then(response => response.blob())
