@@ -61,6 +61,10 @@
             return parser.parseFromString(html, 'text/html');
         }
 
+        function obtenerUrlImagen(element) {
+            return element.src || element.href;
+        }
+
         async function buscarImagenes() {
             const url = document.getElementById('url-input').value;
             const html = await fetchHTML(url);
@@ -70,53 +74,71 @@
             }
 
             const doc = parseHTML(html);
-            const imageElements = [...doc.querySelectorAll('img'), ...doc.querySelectorAll('a[href*=".jpg"], a[href*=".png"], a[href*=".gif"]')];
+            const imageElements = [...doc.querySelectorAll('img'), ...doc.querySelectorAll('a[href*=".jpg"], a[href*=".png"], a[href*=".gif"], a[href*=".jpeg"]')];
             const resultados = document.getElementById('resultados');
             resultados.innerHTML = '';
 
+            const imagenesUnicas = new Set();
             imageElements.forEach((element, index) => {
-                const src = element.src || element.href;
-                const image = new Image();
-                image.src = src;
-                image.onload = () => {
-                    const div = document.createElement('div');
-                    div.className = 'image-item';
+                const src = obtenerUrlImagen(element);
+                if (!imagenesUnicas.has(src)) {
+                    imagenesUnicas.add(src);
 
-                    const img = document.createElement('img');
-                    img.src = src;
-                    img.alt = `imagen-${index}`;
+                    const image = new Image();
+                    image.src = src;
+                    image.onload = () => {
+                        const div = document.createElement('div');
+                        div.className = 'image-item';
 
-                    const info = document.createElement('div');
-                    info.className = 'image-info';
-                    info.innerHTML = `
-                        <div>Nombre: ${src.split('/').pop()}</div>
-                        <div>Formato: ${src.split('.').pop()}</div>
-                        <div>Resolución: ${image.width}x${image.height}</div>
-                    `;
+                        const img = document.createElement('img');
+                        img.src = src;
+                        img.alt = `imagen-${index}`;
 
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
+                        const info = document.createElement('div');
+                        info.className = 'image-info';
+                        info.innerHTML = `
+                            <div>Nombre: ${src.split('/').pop()}</div>
+                            <div>Formato: ${src.split('.').pop()}</div>
+                            <div>Resolución: ${image.width}x${image.height}</div>
+                        `;
 
-                    div.appendChild(img);
-                    div.appendChild(info);
-                    div.appendChild(checkbox);
-                    resultados.appendChild(div);
-                };
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+
+                        div.appendChild(img);
+                        div.appendChild(info);
+                        div.appendChild(checkbox);
+                        resultados.appendChild(div);
+                    };
+                }
             });
         }
 
         function descargarImagenes() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const zip = new JSZip();
+            const promises = [];
+
             checkboxes.forEach(checkbox => {
                 const img = checkbox.previousSibling.previousSibling;
-                const link = document.createElement('a');
-                link.href = img.src;
-                link.download = img.alt;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                const filename = img.src.split('/').pop();
+                promises.push(fetch(img.src)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        zip.file(filename, blob);
+                    }));
+            });
+
+            Promise.all(promises).then(() => {
+                zip.generateAsync({type: 'blob'}).then(content => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = 'imagenes.zip';
+                    link.click();
+                });
             });
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
 </body>
 </html>
