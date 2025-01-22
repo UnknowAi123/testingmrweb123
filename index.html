@@ -75,7 +75,7 @@
 
             const doc = parseHTML(html);
             const imageElements = [
-                ...doc.querySelectorAll('a[href*="https://en.m.uesp.net/wiki/File:"], a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".bmp"], a[href$=".gif"]')
+                ...doc.querySelectorAll('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".bmp"], a[href$=".gif"]')
             ];
             const resultados = document.getElementById('resultados');
             resultados.innerHTML = '';
