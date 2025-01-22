@@ -14,7 +14,7 @@
             text-align: center;
         }
         .container {
-            max-width: 720px;
+            max-width: 800px;
             margin: 0 auto;
         }
         .link-list {
@@ -30,16 +30,16 @@
             padding: 10px;
             width: 100%;
         }
+        .link-info {
+            margin-right: 10px;
+            word-break: break-all;
+            flex-grow: 1;
+        }
         .link-item img {
             max-width: 80px;
             max-height: 60px;
             object-fit: contain;
             margin-right: 10px;
-        }
-        .link-info {
-            margin-right: 10px;
-            word-break: break-all;
-            flex-grow: 1;
         }
     </style>
 </head>
@@ -69,29 +69,6 @@
             return parser.parseFromString(html, 'text/html');
         }
 
-        function obtenerIcono(tipo) {
-            switch(tipo) {
-                case 'imagen':
-                    return 'https://via.placeholder.com/80x60?text=IMG';
-                case 'audio':
-                    return 'https://via.placeholder.com/80x60?text=AUD';
-                case 'web':
-                    return 'https://via.placeholder.com/80x60?text=WEB';
-                default:
-                    return 'https://via.placeholder.com/80x60?text=LINK';
-            }
-        }
-
-        function determinarTipo(href) {
-            if (href.match(/\.(jpeg|jpg|gif|png|bmp)$/i)) {
-                return 'imagen';
-            } else if (href.match(/\.(mp3|wav|ogg)$/i)) {
-                return 'audio';
-            } else {
-                return 'web';
-            }
-        }
-
         async function buscarEnlaces() {
             const url = document.getElementById('url-input').value;
             const html = await fetchHTML(url);
@@ -107,29 +84,20 @@
 
             linkElements.forEach((element, index) => {
                 const href = element.href;
-                const tipo = determinarTipo(href);
-                const iconoSrc = tipo === 'imagen' ? href : obtenerIcono(tipo);
 
                 const div = document.createElement('div');
                 div.className = 'link-item';
 
-                const img = document.createElement('img');
-                img.src = iconoSrc;
-                img.alt = tipo;
-
-                const info = document.createElement('div');
-                info.className = 'link-info';
-                info.innerHTML = `
-                    <div>Nombre: ${href.split('/').pop()}</div>
-                    <div>Formato: ${href.split('.').pop()}</div>
-                `;
+                const link = document.createElement('a');
+                link.href = href;
+                link.textContent = href;
+                link.target = '_blank';
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.value = href;
 
-                div.appendChild(img);
-                div.appendChild(info);
+                div.appendChild(link);
                 div.appendChild(checkbox);
                 resultados.appendChild(div);
             });
