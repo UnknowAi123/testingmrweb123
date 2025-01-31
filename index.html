@@ -41,9 +41,9 @@
 <body>
     <h1>Maniquí Interactivo</h1>
     <div id="maniqui-container">
-        <img src="URL_DE_LA_IMAGEN_DEL_MANIQUÍ" alt="Maniquí Base" class="layer active">
+        <img src="URL_DE_LA_IMAGEN_DEL_MANIQUÍ" alt="Maniquí Base" class="layer active" id="maniqui-base">
         <img src="URL_DE_LA_PRENDA_1" alt="Ropa 1" class="layer">
-        <img src="https://images.uesp.net/a/a0/LG-card-Blood_Dragon.png" alt="Ropa 2" class="layer">
+        <img src="URL_DE_LA_PRENDA_2" alt="Ropa 2" class="layer">
         <!-- Añade más capas según sea necesario -->
     </div>
     <div id="botones-container">
@@ -67,7 +67,12 @@
 
         function guardarImagen() {
             const contenedor = document.getElementById('maniqui-container');
-            html2canvas(contenedor, { scale: 2 }).then(canvas => {
+            const maniquiBase = document.getElementById('maniqui-base');
+
+            html2canvas(contenedor, {
+                scale: maniquiBase.naturalWidth / maniquiBase.width,
+                useCORS: true
+            }).then(canvas => {
                 const enlace = document.createElement('a');
                 enlace.href = canvas.toDataURL('image/png');
                 enlace.download = 'maniqui.png';
