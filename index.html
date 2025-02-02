@@ -8,13 +8,14 @@
         body {
             margin: 0; /* Eliminar cualquier margen del body */
             padding: 10px; /* Añadir espacio alrededor del contenido */
+            box-sizing: border-box; /* Asegurar que el padding no agregue al ancho total */
         }
         .container {
             position: relative;
-            max-width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
-            height: calc(100vh - 60px); /* Ajustar la altura para espacio a los lados y márgenes */
-            margin: 0 auto; /* Centrar el contenedor */
+            width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+            height: calc(100vh - 20px); /* Ajustar la altura para espacio a los lados y márgenes */
             overflow: hidden;
+            box-sizing: border-box; /* Asegurar que el padding no agregue al ancho total */
         }
         .main-image, .layer {
             position: absolute;
@@ -22,7 +23,6 @@
             left: 0;
             width: calc(100% - 20px); /* Añadir espacio a los lados */
             height: calc(100% - 20px); /* Añadir espacio a los lados */
-            margin: 10px; /* Añadir margen alrededor de la imagen */
             object-fit: contain; /* Mantiene el ratio de proporción de la imagen */
         }
         .layer {
@@ -50,6 +50,9 @@
         }
         .controls {
             margin: 10px 0; /* Espacio entre los controles y otros elementos */
+        }
+        .controls > * {
+            margin: 0; /* Eliminar márgenes dentro de los controles */
         }
     </style>
 </head>
