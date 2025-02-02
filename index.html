@@ -8,7 +8,7 @@
         .container {
             position: relative;
             max-width: 100%;
-            height: 100vh; /* Asegura que el contenedor tenga una altura fija */
+            height: 10vh; /* Asegura que el contenedor tenga una altura fija */
             overflow: hidden;
         }
         .layer {
@@ -37,14 +37,51 @@
         <img id="layer2" class="layer" src="Images/Magika_6.png" alt="Capa 2">
         <img id="layer3" class="layer" src="imagen3.jpg" alt="Capa 3">
     </div>
-    <button onclick="toggleLayer('layer1')">Mostrar/Ocultar Capa 1</button>
-    <button onclick="toggleLayer('layer2')">Mostrar/Ocultar Capa 2</button>
-    <button onclick="toggleLayer('layer3')">Mostrar/Ocultar Capa 3</button>
+    <div>
+        <label for="layer1-select">Capa 1:</label>
+        <select id="layer1-select" onchange="changeLayer('layer1', this.value)">
+            <option value="">Seleccionar...</option>
+            <option value="Images/comun1.jpg">Común</option>
+            <option value="Images/rara1.jpg">Rara</option>
+            <option value="Images/epica1.jpg">Épica</option>
+            <option value="Images/legendaria1.jpg">Legendaria</option>
+        </select>
+    </div>
+    <div>
+        <label for="layer2-select">Capa 2:</label>
+        <select id="layer2-select" onchange="changeLayer('layer2', this.value)">
+            <option value="">Seleccionar...</option>
+            <option value="Images/comun2.jpg">Común</option>
+            <option value="Images/rara2.jpg">Rara</option>
+            <option value="Images/epica2.jpg">Épica</option>
+            <option value="Images/legendaria2.jpg">Legendaria</option>
+        </select>
+    </div>
+    <div>
+        <label for="layer3-select">Capa 3:</label>
+        <select id="layer3-select" onchange="changeLayer('layer3', this.value)">
+            <option value="">Seleccionar...</option>
+            <option value="Images/comun3.jpg">Común</option>
+            <option value="Images/rara3.jpg">Rara</option>
+            <option value="Images/epica3.jpg">Épica</option>
+            <option value="Images/legendaria3.jpg">Legendaria</option>
+        </select>
+    </div>
 
     <script>
         function toggleLayer(layerId) {
             var layer = document.getElementById(layerId);
             if (layer.style.display === "none" || layer.style.display === "") {
+                layer.style.display = "block";
+            } else {
+                layer.style.display = "none";
+            }
+        }
+
+        function changeLayer(layerId, src) {
+            var layer = document.getElementById(layerId);
+            if (src !== "") {
+                layer.src = src;
                 layer.style.display = "block";
             } else {
                 layer.style.display = "none";
