@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Maniquí</title>
     <style>
+        body {
+            margin: 0; /* Eliminar cualquier margen del body */
+        }
         .container {
             position: relative;
             max-width: 100%;
@@ -44,7 +47,7 @@
 </head>
 <body>
     <div class="container">
-        <img class="main-image" src="Images/LG-card-Blood_Dragon.png" alt="Imagen Principal">
+        <img class="main-image" id="main-image" src="Images/Main.png" alt="Imagen Principal">
         <img id="layer1" class="layer" alt="Capa 1">
         <img id="layer2" class="layer" alt="Capa 2">
         <img id="layer3" class="layer" alt="Capa 3">
@@ -98,6 +101,9 @@
             layers.forEach(function(layer) {
                 layer.style.display = 'none';
             });
+
+            // Ocultar la imagen principal
+            document.getElementById('main-image').style.display = 'none';
 
             // Mostrar la nueva capa seleccionada
             var layer = document.getElementById(layerId);
