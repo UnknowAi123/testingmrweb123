@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maniquí Interactivo</title>
+    <title>Proyecto Maniquí</title>
     <style>
-        /* Estilos básicos */
-        #maniqui-container {
+        .container {
             position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            margin: 0 auto;
-            border: 1px solid #ccc;
+            max-width: 100%;
+            overflow: hidden;
         }
         .layer {
             position: absolute;
@@ -22,69 +18,29 @@
             height: auto;
             display: none;
         }
-        .layer.active {
-            display: block;
-        }
-        #botones-container {
-            text-align: left;
-            margin: 20px auto;
-            width: fit-content;
-        }
-        .boton-capa {
-            display: block;
-            margin: 5px 0;
-            padding: 10px;
-            cursor: pointer;
-        }
-        button {
-            margin: 20px auto;
-            display: block;
-            padding: 10px 20px;
-            cursor: pointer;
+        #layer1, #layer2, #layer3 {
+            display: block; /* Muestra las capas iniciales si se desea */
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <h1>Maniquí Interactivo</h1>
-    <div id="botones-container">
-        <label>
-            <input type="checkbox" class="boton-capa" value="https://drive.google.com/uc?id=10Szy63wbfssIrxevWUJvAtdETsxoBEPf"> Prenda 1
-        </label>
-        <label>
-            <input type="checkbox" class="boton-capa" value="URL_DE_LA_PRENDA_2"> Prenda 2
-        </label>
-        <!-- Añade más botones según sea necesario -->
+    <div class="container">
+        <img id="layer1" class="layer" src="imagen1.jpg" alt="Capa 1">
+        <img id="layer2" class="layer" src="imagen2.jpg" alt="Capa 2">
+        <img id="layer3" class="layer" src="imagen3.jpg" alt="Capa 3">
     </div>
-    <button onclick="guardarImagen()">Guardar Imagen</button>
-    <div id="maniqui-container">
-        <img src="URL_DE_LA_PRENDA_2" alt="Ropa 2" class="layer">
-        <img src="https://drive.google.com/uc?id=10Szy63wbfssIrxevWUJvAtdETsxoBEPf" alt="Ropa 1" class="layer">
-        <img src="https://images.uesp.net/a/a0/LG-card-Blood_Dragon.png" alt="Maniquí Base" class="layer active" id="maniqui-base">
-        <!-- Añade más capas según sea necesario -->
-    </div>
+    <button onclick="toggleLayer('layer1')">Toggle Capa 1</button>
+    <button onclick="toggleLayer('layer2')">Toggle Capa 2</button>
+    <button onclick="toggleLayer('layer3')">Toggle Capa 3</button>
+
     <script>
-        document.querySelectorAll('.boton-capa').forEach(boton => {
-            boton.addEventListener('change', (event) => {
-                const imagenSrc = event.target.value;
-                const capa = document.querySelector(`img[src="${imagenSrc}"]`);
-                capa.classList.toggle('active', event.target.checked);
-            });
-        });
-
-        function guardarImagen() {
-            const contenedor = document.getElementById('maniqui-container');
-            const maniquiBase = document.getElementById('maniqui-base');
-
-            html2canvas(contenedor, {
-                scale: maniquiBase.naturalWidth / maniquiBase.width,
-                useCORS: true
-            }).then(canvas => {
-                const enlace = document.createElement('a');
-                enlace.href = canvas.toDataURL('image/png');
-                enlace.download = 'maniqui.png';
-                enlace.click();
-            });
+        function toggleLayer(layerId) {
+            var layer = document.getElementById(layerId);
+            if (layer.style.display === "none" || layer.style.display === "") {
+                layer.style.display = "block";
+            } else {
+                layer.style.display = "none";
+            }
         }
     </script>
 </body>
