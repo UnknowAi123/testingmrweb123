@@ -8,6 +8,7 @@
         .container {
             position: relative;
             max-width: 100%;
+            height: 100vh; /* Asegura que el contenedor tenga una altura fija */
             overflow: hidden;
         }
         .layer {
@@ -15,7 +16,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: auto;
+            height: 100%; /* Asegura que las imágenes ocupen todo el contenedor */
             display: none;
         }
         #layer1 {
@@ -35,9 +36,9 @@
         <img id="layer2" class="layer" src="Images/Magika_6.png" alt="Capa 2">
         <img id="layer3" class="layer" src="imagen3.jpg" alt="Capa 3">
     </div>
-    <button onclick="toggleLayer('layer1')">Toggle Capa 1</button>
-    <button onclick="toggleLayer('layer2')">Toggle Capa 2</button>
-    <button onclick="toggleLayer('layer3')">Toggle Capa 3</button>
+    <button onclick="toggleLayer('layer1')">Mostrar/Ocultar Capa 1</button>
+    <button onclick="toggleLayer('layer2')">Mostrar/Ocultar Capa 2</button>
+    <button onclick="toggleLayer('layer3')">Mostrar/Ocultar Capa 3</button>
 
     <script>
         function toggleLayer(layerId) {
