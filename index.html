@@ -10,7 +10,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh; /* Asegurar que el body ocupe toda la altura de la ventana */
             padding: 0;
         }
@@ -20,14 +20,14 @@
             font-weight: bold;
             color: #333;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 0; /* Quitar el margen del título */
+            margin: 5px 0; /* Reducir el margen del título */
         }
         .container {
             position: relative;
             width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
-            height: calc(100vh - 120px); /* Ajustar la altura considerando el espacio del título y los botones */
+            height: calc(100vh - 105px); /* Ajustar la altura considerando el espacio del título y los botones */
             margin: 0; /* Quitar el margen alrededor del contenedor */
-            padding: 10px; /* Añadir padding alrededor del contenedor */
+            padding: 5px; /* Reducir el padding alrededor del contenedor */
             box-sizing: border-box;
             overflow: hidden;
         }
@@ -55,7 +55,7 @@
             z-index: 4; /* Nueva capa más adelante */
         }
         .controls {
-            margin: 0; /* Quitar el margen entre los controles y otros elementos */
+            margin: 5px 0; /* Reducir el margen entre los controles y otros elementos */
         }
     </style>
 </head>
