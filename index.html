@@ -7,14 +7,26 @@
     <style>
         body {
             margin: 0; /* Eliminar cualquier margen del body */
-            padding: 10px; /* Añadir un poco de padding para margen interno */
-            box-sizing: border-box; /* Asegurar que el padding no agregue al ancho total */
+            padding: 0; /* Añadir padding interno */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh; /* Asegurar que el body ocupe toda la altura de la ventana */
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 5px 0; /* Reducir el espacio entre el título y otros elementos */
         }
         .container {
             position: relative;
-            max-width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
+            width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
             height: calc(100vh - 80px); /* Ajustar la altura para espacio a los lados */
-            margin: 1px auto; /* Añadir margen alrededor del contenedor */
+            margin: 5px 0; /* Reducir el espacio alrededor del contenedor */
             overflow: hidden;
         }
         .main-image, .layer {
@@ -40,16 +52,8 @@
         #layer4 {
             z-index: 4; /* Nueva capa más adelante */
         }
-        .title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 10px 0; /* Espacio entre el título y otros elementos */
-        }
         .controls {
-            margin: 10px 0; /* Espacio entre los controles y otros elementos */
+            margin: 5px 0; /* Reducir el espacio entre los controles y otros elementos */
         }
     </style>
 </head>
