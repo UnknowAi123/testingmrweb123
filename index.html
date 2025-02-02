@@ -15,9 +15,8 @@
         }
         .container {
             position: relative;
-            width: 80%; /* Ajustar el ancho del contenedor para espacio a los lados */
-            max-width: 100%;
-            height: auto; /* Ajustar la altura automáticamente */
+            max-width: 80%; /* Ajustar el ancho del contenedor para espacio a los lados */
+            max-height: 100vh; /* Ajustar la altura automáticamente */
             overflow: hidden;
         }
         .main-image {
@@ -73,7 +72,7 @@
         <label for="layer2-select">Capa 2:</label>
         <select id="layer2-select" onchange="changeLayer('layer2', this.value, 'group2')">
             <option value="">Seleccionar...</option>
-            <option value="Images/Magika_6.png">Común</option>
+            <option value="Magika_6.png">Común</option>
             <option value="Images/rara2.jpg">Rara</option>
             <option value="Images/epica2.jpg">Épica</option>
             <option value="Images/legendaria2.jpg">Legendaria</option>
@@ -108,8 +107,10 @@
                 layer.style.display = 'none';
             });
 
-            // Ocultar la imagen principal
-            document.getElementById('main-image').style.display = 'none';
+            // Ocultar la imagen principal si hay una selección
+            if (src !== "") {
+                document.getElementById('main-image').style.display = 'none';
+            }
 
             // Mostrar la nueva capa seleccionada
             var layer = document.getElementById(layerId);
