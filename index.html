@@ -7,15 +7,26 @@
     <style>
         body {
             margin: 0; /* Eliminar cualquier margen del body */
-            padding: 10px; /* Añadir espacio alrededor del contenido */
-            box-sizing: border-box; /* Asegurar que el padding no agregue al ancho total */
+            padding: 0; /* Asegura que no haya margen dentro del body */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px 0; /* Espacio entre el título y otros elementos */
         }
         .container {
             position: relative;
-            width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
-            height: calc(100vh - 20px); /* Ajustar la altura para espacio a los lados y márgenes */
+            width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
+            height: calc(100vh - 20px); /* Ajustar la altura para espacio a los lados */
+            margin: 10px 0; /* Añadir margen alrededor del contenedor */
             overflow: hidden;
-            box-sizing: border-box; /* Asegurar que el padding no agregue al ancho total */
         }
         .main-image, .layer {
             position: absolute;
@@ -23,6 +34,7 @@
             left: 0;
             width: calc(100% - 20px); /* Añadir espacio a los lados */
             height: calc(100% - 20px); /* Añadir espacio a los lados */
+            margin: 10px; /* Añadir margen alrededor de la imagen */
             object-fit: contain; /* Mantiene el ratio de proporción de la imagen */
         }
         .layer {
@@ -40,19 +52,12 @@
         #layer4 {
             z-index: 4; /* Nueva capa más adelante */
         }
-        .title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 10px 0; /* Espacio entre el título y otros elementos */
-        }
         .controls {
             margin: 10px 0; /* Espacio entre los controles y otros elementos */
-        }
-        .controls > * {
-            margin: 0; /* Eliminar márgenes dentro de los controles */
+            width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Espacio entre cada control */
         }
     </style>
 </head>
@@ -66,44 +71,46 @@
         <img id="layer4" class="layer" alt="Capa 4">
     </div>
     <div class="controls">
-        <label for="layer1-select">Capa 1:</label>
-        <select id="layer1-select" onchange="changeLayer('layer1', this.value, 'group1')">
-            <option value="">Seleccionar...</option>
-            <option value="Images/comun1.jpg">Común</option>
-            <option value="Images/rara1.jpg">Rara</option>
-            <option value="Images/epica1.jpg">Épica</option>
-            <option value="Images/LG-card-Blood_Dragon.png">Legendaria</option>
-        </select>
-    </div>
-    <div class="controls">
-        <label for="layer2-select">Capa 2:</label>
-        <select id="layer2-select" onchange="changeLayer('layer2', this.value, 'group2')">
-            <option value="">Seleccionar...</option>
-            <option value="Images/Magika_6.png">Común</option>
-            <option value="Images/rara2.jpg">Rara</option>
-            <option value="Images/epica2.jpg">Épica</option>
-            <option value="Images/legendaria2.jpg">Legendaria</option>
-        </select>
-    </div>
-    <div class="controls">
-        <label for="layer3-select">Capa 3:</label>
-        <select id="layer3-select" onchange="changeLayer('layer3', this.value, 'group3')">
-            <option value="">Seleccionar...</option>
-            <option value="Images/comun3.jpg">Común</option>
-            <option value="Images/rara3.jpg">Rara</option>
-            <option value="Images/epica3.jpg">Épica</option>
-            <option value="Images/legendaria3.jpg">Legendaria</option>
-        </select>
-    </div>
-    <div class="controls">
-        <label for="layer4-select">Capa 4:</label>
-        <select id="layer4-select" onchange="changeLayer('layer4', this.value, 'group4')">
-            <option value="">Seleccionar...</option>
-            <option value="Images/comun4.jpg">Común</option>
-            <option value="Images/rara4.jpg">Rara</option>
-            <option value="Images/epica4.jpg">Épica</option>
-            <option value="Images/legendaria4.jpg">Legendaria</option>
-        </select>
+        <div>
+            <label for="layer1-select">Capa 1:</label>
+            <select id="layer1-select" onchange="changeLayer('layer1', this.value, 'group1')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun1.jpg">Común</option>
+                <option value="Images/rara1.jpg">Rara</option>
+                <option value="Images/epica1.jpg">Épica</option>
+                <option value="Images/LG-card-Blood_Dragon.png">Legendaria</option>
+            </select>
+        </div>
+        <div>
+            <label for="layer2-select">Capa 2:</label>
+            <select id="layer2-select" onchange="changeLayer('layer2', this.value, 'group2')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/Magika_6.png">Común</option>
+                <option value="Images/rara2.jpg">Rara</option>
+                <option value="Images/epica2.jpg">Épica</option>
+                <option value="Images/legendaria2.jpg">Legendaria</option>
+            </select>
+        </div>
+        <div>
+            <label for="layer3-select">Capa 3:</label>
+            <select id="layer3-select" onchange="changeLayer('layer3', this.value, 'group3')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun3.jpg">Común</option>
+                <option value="Images/rara3.jpg">Rara</option>
+                <option value="Images/epica3.jpg">Épica</option>
+                <option value="Images/legendaria3.jpg">Legendaria</option>
+            </select>
+        </div>
+        <div>
+            <label for="layer4-select">Capa 4:</label>
+            <select id="layer4-select" onchange="changeLayer('layer4', this.value, 'group4')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun4.jpg">Común</option>
+                <option value="Images/rara4.jpg">Rara</option>
+                <option value="Images/epica4.jpg">Épica</option>
+                <option value="Images/legendaria4.jpg">Legendaria</option>
+            </select>
+        </div>
     </div>
 
     <script>
