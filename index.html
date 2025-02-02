@@ -25,7 +25,7 @@
         .container {
             position: relative;
             width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
-            height: calc(100vh - 140px); /* Ajustar la altura considerando el espacio del título y los botones */
+            height: calc(100vh - 150px); /* Ajustar la altura considerando el espacio del título y los botones */
             margin: 0; /* Quitar el margen alrededor del contenedor */
             padding: 5px; /* Reducir el padding alrededor del contenedor */
             box-sizing: border-box;
@@ -69,14 +69,11 @@
             font-size: 16px;
             cursor: pointer;
         }
-        .save-button-container {
-            margin-bottom: 10px; /* Añadir 10px de espacio debajo del botón guardar */
-        }
     </style>
 </head>
 <body>
     <h1 class="title">Proyecto Maniquí</h1>
-    <div class="container">
+    <div class="container" id="image-container">
         <img class="main-image" id="main-image" src="Images/Main.png" alt="Imagen Principal">
         <img id="layer1" class="layer" alt="Capa 1">
         <img id="layer2" class="layer" alt="Capa 2">
@@ -125,9 +122,7 @@
             </select>
         </div>
     </div>
-    <div class="save-button-container">
-        <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
-    </div>
+    <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
 
     <script>
         function changeLayer(layerId, src, groupId) {
@@ -150,10 +145,10 @@
         }
 
         function saveImage() {
-            var container = document.querySelector('.container');
+            var container = document.getElementById('image-container');
             var canvas = document.createElement('canvas');
-            canvas.width = container.scrollWidth;
-            canvas.height = container.scrollHeight;
+            canvas.width = 1400;
+            canvas.height = 2000;
             var ctx = canvas.getContext('2d');
 
             var images = container.querySelectorAll('img');
