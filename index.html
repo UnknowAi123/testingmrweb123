@@ -7,11 +7,17 @@
     <style>
         body {
             margin: 0; /* Eliminar cualquier margen del body */
+            display: flex;
+            justify-content: center; /* Centrar el contenido horizontalmente */
+            align-items: center; /* Centrar el contenido verticalmente */
+            height: 100vh; /* Asegurar que el body ocupe toda la altura de la ventana */
+            background-color: #f0f0f0; /* Color de fondo opcional para ver el espacio */
         }
         .container {
             position: relative;
+            width: 80%; /* Ajustar el ancho del contenedor para espacio a los lados */
             max-width: 100%;
-            height: 100vh; /* Asegura que el contenedor tenga una altura fija */
+            height: auto; /* Ajustar la altura automáticamente */
             overflow: hidden;
         }
         .main-image {
@@ -60,14 +66,14 @@
             <option value="Images/comun1.jpg">Común</option>
             <option value="Images/rara1.jpg">Rara</option>
             <option value="Images/epica1.jpg">Épica</option>
-            <option value="Images/legendaria1.jpg">Legendaria</option>
+            <option value="Images/LG-card-Blood_Dragon.png">Legendaria</option>
         </select>
     </div>
     <div>
         <label for="layer2-select">Capa 2:</label>
         <select id="layer2-select" onchange="changeLayer('layer2', this.value, 'group2')">
             <option value="">Seleccionar...</option>
-            <option value="Images/comun2.jpg">Común</option>
+            <option value="Images/Magika_6.png">Común</option>
             <option value="Images/rara2.jpg">Rara</option>
             <option value="Images/epica2.jpg">Épica</option>
             <option value="Images/legendaria2.jpg">Legendaria</option>
