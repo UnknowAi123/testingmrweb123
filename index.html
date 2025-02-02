@@ -56,6 +56,20 @@
         }
         .controls {
             margin: 0; /* Quitar el margen entre los controles y otros elementos */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2px; /* Añadir separación entre botones */
+        }
+        .controls label,
+        .controls select {
+            margin: 2px; /* Añadir separación entre botones */
+        }
+        .save-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -77,8 +91,6 @@
             <option value="Images/epica1.jpg">Épica</option>
             <option value="Images/LG-card-Blood_Dragon.png">Legendaria</option>
         </select>
-    </div>
-    <div class="controls">
         <label for="layer2-select">Capa 2:</label>
         <select id="layer2-select" onchange="changeLayer('layer2', this.value, 'group2')">
             <option value="">Seleccionar...</option>
@@ -87,8 +99,6 @@
             <option value="Images/epica2.jpg">Épica</option>
             <option value="Images/legendaria2.jpg">Legendaria</option>
         </select>
-    </div>
-    <div class="controls">
         <label for="layer3-select">Capa 3:</label>
         <select id="layer3-select" onchange="changeLayer('layer3', this.value, 'group3')">
             <option value="">Seleccionar...</option>
@@ -97,8 +107,6 @@
             <option value="Images/epica3.jpg">Épica</option>
             <option value="Images/legendaria3.jpg">Legendaria</option>
         </select>
-    </div>
-    <div class="controls">
         <label for="layer4-select">Capa 4:</label>
         <select id="layer4-select" onchange="changeLayer('layer4', this.value, 'group4')">
             <option value="">Seleccionar...</option>
@@ -108,6 +116,7 @@
             <option value="Images/legendaria4.jpg">Legendaria</option>
         </select>
     </div>
+    <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
 
     <script>
         function changeLayer(layerId, src, groupId) {
@@ -128,6 +137,19 @@
                 layer.setAttribute('data-group', groupId); // Añadir atributo de grupo a la nueva capa seleccionada
             }
         }
+
+        function saveImage() {
+            var container = document.querySelector('.container');
+            html2canvas(container).then(canvas => {
+                var link = document.createElement('a');
+                link.download = 'proyecto_maniqui.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
     </script>
+
+    <!-- Incluir la librería html2canvas -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </body>
 </html>
