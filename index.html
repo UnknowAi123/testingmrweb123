@@ -56,6 +56,9 @@
         }
         .controls {
             margin: 5px 0; /* Reducir el margen entre los controles y otros elementos */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .controls > div {
             margin: 2px 0; /* Añadir separación entre botones */
@@ -143,12 +146,32 @@
 
         function saveImage() {
             var container = document.querySelector('.container');
-            html2canvas(container, { scale: 2 }).then(canvas => {
-                var link = document.createElement('a');
-                link.download = 'proyecto_maniqui.png';
-                link.href = canvas.toDataURL('image/png', 1.0);
-                link.click();
+            var canvas = document.createElement('canvas');
+            canvas.width = container.scrollWidth;
+            canvas.height = container.scrollHeight;
+            var ctx = canvas.getContext('2d');
+
+            var images = container.querySelectorAll('img');
+            images.forEach(function(img) {
+                if (img.style.display !== 'none') {
+                    var imgAspectRatio = img.naturalWidth / img.naturalHeight;
+                    var canvasAspectRatio = canvas.width / canvas.height;
+                    if (imgAspectRatio > canvasAspectRatio) {
+                        var height = canvas.width / imgAspectRatio;
+                        ctx.drawImage(img, 0, (canvas.height - height) / 2, canvas.width, height);
+                    } else {
+                        var width = canvas.height * imgAspectRatio;
+                        ctx.drawImage(img, (canvas.width - width) / 2, 0, width, canvas.height);
+                    }
+                }
             });
+
+            var link = document.createElement('a');
+            link.download = 'proyecto_maniqui.png';
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 
