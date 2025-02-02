@@ -18,14 +18,20 @@
             height: auto;
             display: none;
         }
-        #layer1, #layer2, #layer3 {
-            display: block; /* Muestra las capas iniciales si se desea */
+        #layer1 {
+            z-index: 1; /* Capa más atrás */
+        }
+        #layer2 {
+            z-index: 2; /* Capa intermedia */
+        }
+        #layer3 {
+            z-index: 3; /* Capa más adelante */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img id="layer1" class="layer" src="imagen1.jpg" alt="Capa 1">
+        <img id="layer1" class="layer" src="Images/LG-card-Blood_Dragon.png" alt="Capa 1">
         <img id="layer2" class="layer" src="imagen2.jpg" alt="Capa 2">
         <img id="layer3" class="layer" src="imagen3.jpg" alt="Capa 3">
     </div>
