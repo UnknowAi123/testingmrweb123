@@ -69,20 +69,13 @@
             font-size: 16px;
             cursor: pointer;
         }
-        .resizable {
-            resize: both;
-            overflow: auto;
-        }
-        .draggable {
-            cursor: move;
-        }
     </style>
 </head>
 <body>
     <h1 class="title">Project TES: Legends</h1>
     <div class="container" id="image-container">
         <img class="main-image" id="main-image" src="Images/Main.png" alt="Imagen Principal">
-        <img id="layer1" class="layer resizable draggable" alt="C1">
+        <img id="layer1" class="layer" alt="C1">
         <img id="layer2" class="layer" alt="C2">
         <img id="layer3" class="layer" alt="C3">
         <img id="layer4" class="layer" alt="Capa 4">
@@ -129,6 +122,16 @@
             </select>
         </div>
     </div>
+    <div class="controls">
+        <label for="size-slider">Tamaño:</label>
+        <input type="range" id="size-slider" min="50" max="200" value="100" oninput="resizeLayer('layer1', this.value)">
+        
+        <label for="x-slider">Posición X:</label>
+        <input type="range" id="x-slider" min="0" max="100" value="50" oninput="moveLayerX('layer1', this.value)">
+        
+        <label for="y-slider">Posición Y:</label>
+        <input type="range" id="y-slider" min="0" max="100" value="50" oninput="moveLayerY('layer1', this.value)">
+    </div>
     <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
 
     <script>
@@ -148,27 +151,24 @@
             }
         }
 
-        const draggableElements = document.querySelectorAll('.draggable');
-        draggableElements.forEach(el => {
-            el.addEventListener('mousedown', startDrag);
-        });
+        function resizeLayer(layerId, size) {
+            var layer = document.getElementById(layerId);
+            layer.style.width = size + '%';
+            layer.style.height = 'auto';
+        }
 
-        function startDrag(e) {
-            const elem = e.target;
-            const offsetX = e.clientX - elem.getBoundingClientRect().left;
-            const offsetY = e.clientY - elem.getBoundingClientRect().top;
-            document.addEventListener('mousemove', dragElement);
-            document.addEventListener('mouseup', stopDrag);
+        function moveLayerX(layerId, position) {
+            var layer = document.getElementById(layerId);
+            var containerWidth = document.getElementById('image-container').offsetWidth;
+            var newPosition = (position / 100) * containerWidth;
+            layer.style.left = newPosition + 'px';
+        }
 
-            function dragElement(e) {
-                elem.style.left = `${e.clientX - offsetX}px`;
-                elem.style.top = `${e.clientY - offsetY}px`;
-            }
-
-            function stopDrag() {
-                document.removeEventListener('mousemove', dragElement);
-                document.removeEventListener('mouseup', stopDrag);
-            }
+        function moveLayerY(layerId, position) {
+            var layer = document.getElementById(layerId);
+            var containerHeight = document.getElementById('image-container').offsetHeight;
+            var newPosition = (position / 100) * containerHeight;
+            layer.style.top = newPosition + 'px';
         }
 
         function saveImage() {
