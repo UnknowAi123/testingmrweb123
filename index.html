@@ -6,12 +6,12 @@
     <title>Proyect TES:Legends</title>
     <style>
         body {
-            margin: 0;
+            margin: 0; /* Eliminar cualquier margen del body */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            min-height: 100vh; /* Asegurar que el body ocupe toda la altura de la ventana */
             padding: 0;
         }
         .title {
@@ -20,14 +20,14 @@
             font-weight: bold;
             color: #333;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 5px 0;
+            margin: 5px 0; /* Reducir el margen del título */
         }
         .container {
             position: relative;
-            width: calc(100% - 20px);
-            height: calc(100vh - 150px);
-            margin: 0;
-            padding: 5px;
+            width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
+            height: calc(100vh - 150px); /* Ajustar la altura considerando el espacio del título y los botones */
+            margin: 0; /* Quitar el margen alrededor del contenedor */
+            padding: 5px; /* Reducir el padding alrededor del contenedor */
             box-sizing: border-box;
             overflow: hidden;
         }
@@ -37,44 +37,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: contain; /* Mantiene el ratio de proporción de la imagen */
         }
         .layer {
             display: none;
         }
         #layer1 {
-            z-index: 1;
+            z-index: 1; /* Capa más atrás */
         }
         #layer2 {
-            z-index: 2;
+            z-index: 2; /* Capa intermedia */
         }
         #layer3 {
-            z-index: 3;
+            z-index: 3; /* Capa más adelante */
         }
         #layer4 {
-            z-index: 4;
+            z-index: 4; /* Nueva capa más adelante */
         }
         .controls {
-            margin: 5px 0;
+            margin: 5px 0; /* Reducir el margen entre los controles y otros elementos */
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
         .controls > div {
-            margin: 2px 0;
+            margin: 2px 0; /* Añadir separación entre botones */
         }
         .save-button {
             margin-top: 10px;
             padding: 5px 10px;
             font-size: 16px;
             cursor: pointer;
-        }
-        .resizable {
-            resize: both;
-            overflow: auto;
-        }
-        .draggable {
-            cursor: move;
         }
     </style>
 </head>
@@ -92,7 +85,7 @@
             <label for="layer1-select">Rareza:</label>
             <select id="layer1-select" onchange="changeLayer('layer1', this.value, 'group1')">
                 <option value="">Seleccionar...</option>
-                <option value="Images/comun1.jpg">Común</option>
+                <option value="Images/comun1.jpg">6</option>
                 <option value="Images/rara1.jpg">Rara</option>
                 <option value="Images/epica1.jpg">Épica</option>
                 <option value="Images/LG-card-Blood_Dragon.png">Legendaria</option>
@@ -129,55 +122,26 @@
             </select>
         </div>
     </div>
-    <div class="controls">
-        <label for="size-slider">Tamaño:</label>
-        <input type="range" id="size-slider" min="50" max="200" value="100" oninput="resizeLayer('layer1', this.value)">
-        
-        <label for="x-slider">Posición X:</label>
-        <input type="range" id="x-slider" min="0" max="100" value="50" oninput="moveLayerX('layer1', this.value)">
-        
-        <label for="y-slider">Posición Y:</label>
-        <input type="range" id="y-slider" min="0" max="100" value="50" oninput="moveLayerY('layer1', this.value)">
-    </div>
     <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
 
     <script>
         function changeLayer(layerId, src, groupId) {
+            // Ocultar todas las capas del mismo grupo
             var layers = document.querySelectorAll(`[data-group='${groupId}']`);
             layers.forEach(function(layer) {
                 layer.style.display = 'none';
             });
 
+            // Ocultar la imagen principal
             document.getElementById('main-image').style.display = 'none';
 
+            // Mostrar la nueva capa seleccionada
             var layer = document.getElementById(layerId);
             if (src !== "") {
                 layer.src = src;
                 layer.style.display = "block";
-                layer.setAttribute('data-group', groupId);
+                layer.setAttribute('data-group', groupId); // Añadir atributo de grupo a la nueva capa seleccionada
             }
-        }
-
-        function resizeLayer(layerId, size) {
-            var layer = document.getElementById(layerId);
-            layer.style.width = size + '%';
-            layer.style.height = 'auto';
-            layer.style.left = `calc(50% - ${layer.clientWidth / 2}px)`;
-            layer.style.top = `calc(50% - ${layer.clientHeight / 2}px)`;
-        }
-
-        function moveLayerX(layerId, position) {
-            var layer = document.getElementById(layerId);
-            var containerWidth = document.getElementById('image-container').offsetWidth;
-            var newPosition = (position / 100) * containerWidth;
-            layer.style.left = newPosition + 'px';
-        }
-
-        function moveLayerY(layerId, position) {
-            var layer = document.getElementById(layerId);
-            var containerHeight = document.getElementById('image-container').offsetHeight;
-            var newPosition = (position / 100) * containerHeight;
-            layer.style.top = newPosition + 'px';
         }
 
         function saveImage() {
@@ -201,6 +165,13 @@
                     }
                 }
             });
+
+            var layer1 = document.getElementById('layer1');
+            if (layer1.style.display !== 'none') {
+                var newLayer1Width = layer1.naturalWidth * (canvas.width / layer1.naturalWidth);
+                var newLayer1Height = layer1.naturalHeight * (canvas.height / layer1.naturalHeight);
+                ctx.drawImage(layer1, (canvas.width - newLayer1Width) / 2, (canvas.height - newLayer1Height) / 2, newLayer1Width, newLayer1Height);
+            }
 
             var link = document.createElement('a');
             link.download = 'TES_Legends.png';
