@@ -42,14 +42,17 @@
         .layer {
             display: none;
         }
-        #layer0 {
-            z-index: 0; /* Nueva capa añadida */
-        }
         #layer1 {
             z-index: 1; /* Capa más atrás */
         }
         #layer2 {
             z-index: 2; /* Capa intermedia */
+        }
+        #layer3 {
+            z-index: 3; /* Capa más adelante */
+        }
+        #layer4 {
+            z-index: 4; /* Nueva capa más adelante */
         }
         .controls {
             margin: 5px 0; /* Reducir el margen entre los controles y otros elementos */
@@ -66,36 +69,18 @@
             font-size: 16px;
             cursor: pointer;
         }
-        .slider {
-            width: 200px;
-        }
     </style>
 </head>
 <body>
     <h1 class="title">Project TES: Legends</h1>
     <div class="container" id="image-container">
         <img class="main-image" id="main-image" src="Images/Main.png" alt="Imagen Principal">
-        <img id="layer0" class="layer" alt="C0">
         <img id="layer1" class="layer" alt="C1">
         <img id="layer2" class="layer" alt="C2">
+        <img id="layer3" class="layer" alt="C3">
+        <img id="layer4" class="layer" alt="Capa 4">
     </div>
     <div class="controls">
-        <div>
-            <label for="layer0-file">Capa 0:</label>
-            <input type="file" id="layer0-file" accept="image/*" onchange="loadLayer0(event)">
-        </div>
-        <div>
-            <label for="layer0-size">Tamaño Capa 0:</label>
-            <input type="range" id="layer0-size" class="slider" min="10" max="200" value="100" oninput="resizeLayer0(this.value)">
-        </div>
-        <div>
-            <label for="layer0-posX">Posición X Capa 0:</label>
-            <input type="range" id="layer0-posX" class="slider" min="-100" max="100" value="0" oninput="moveLayer0(this.value, 'x')">
-        </div>
-        <div>
-            <label for="layer0-posY">Posición Y Capa 0:</label>
-            <input type="range" id="layer0-posY" class="slider" min="-100" max="100" value="0" oninput="moveLayer0(this.value, 'y')">
-        </div>
         <div>
             <label for="layer1-select">Rareza:</label>
             <select id="layer1-select" onchange="changeLayer('layer1', this.value, 'group1')">
@@ -116,40 +101,30 @@
                 <option value="Images/legendaria2.jpg">Legendaria</option>
             </select>
         </div>
+        <div>
+            <label for="layer3-select">Capa 3:</label>
+            <select id="layer3-select" onchange="changeLayer('layer3', this.value, 'group3')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun3.jpg">Común</option>
+                <option value="Images/rara3.jpg">Rara</option>
+                <option value="Images/epica3.jpg">Épica</option>
+                <option value="Images/legendaria3.jpg">Legendaria</option>
+            </select>
+        </div>
+        <div>
+            <label for="layer4-select">Capa 4:</label>
+            <select id="layer4-select" onchange="changeLayer('layer4', this.value, 'group4')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun4.jpg">Común</option>
+                <option value="Images/rara4.jpg">Rara</option>
+                <option value="Images/epica4.jpg">Épica</option>
+                <option value="Images/legendaria4.jpg">Legendaria</option>
+            </select>
+        </div>
     </div>
     <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
 
     <script>
-        function loadLayer0(event) {
-            var layer0 = document.getElementById('layer0');
-            var reader = new FileReader();
-            reader.onload = function() {
-                layer0.src = reader.result;
-                layer0.style.display = 'block';
-                resizeLayer0(document.getElementById('layer0-size').value); // Ajustar tamaño inicial
-                moveLayer0(document.getElementById('layer0-posX').value, 'x'); // Ajustar posición inicial X
-                moveLayer0(document.getElementById('layer0-posY').value, 'y'); // Ajustar posición inicial Y
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        function resizeLayer0(size) {
-            var layer0 = document.getElementById('layer0');
-            layer0.style.width = size + '%';
-            layer0.style.height = size + '%';
-            layer0.style.top = `calc(50% - ${layer0.offsetHeight / 2}px)`;
-            layer0.style.left = `calc(50% - ${layer0.offsetWidth / 2}px)`;
-        }
-
-        function moveLayer0(value, axis) {
-            var layer0 = document.getElementById('layer0');
-            if (axis === 'x') {
-                layer0.style.left = `calc(50% - ${layer0.offsetWidth / 2}px + ${value}px)`;
-            } else if (axis === 'y') {
-                layer0.style.top = `calc(50% - ${layer0.offsetHeight / 2}px + ${value}px)`;
-            }
-        }
-
         function changeLayer(layerId, src, groupId) {
             // Ocultar todas las capas del mismo grupo
             var layers = document.querySelectorAll(`[data-group='${groupId}']`);
