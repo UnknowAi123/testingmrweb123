@@ -44,6 +44,7 @@
         }
         #layer1 {
             z-index: 1; /* Capa más atrás */
+            transform-origin: center; /* Ajustar el origen del zoom al centro */
         }
         #layer2 {
             z-index: 2; /* Capa intermedia */
@@ -194,13 +195,26 @@
             var link = document.createElement('a');
             link.download = 'TES_Legends.png';
             link.href = canvas.toDataURL('image/png');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    </script>
+            });
 
-    <!-- Incluir la librería html2canvas -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+var layer1 = document.getElementById('layer1');
+if (layer1.style.display !== 'none') {
+    var scale = document.getElementById('zoom-range').value / 100;
+    var newLayer1Width = layer1.naturalWidth * scale;
+    var newLayer1Height = layer1.naturalHeight * scale;
+    ctx.drawImage(layer1, (canvas.width - newLayer1Width) / 2, (canvas.height - newLayer1Height) / 2, newLayer1Width, newLayer1Height);
+}
+
+var link = document.createElement('a');
+link.download = 'TES_Legends.png';
+link.href = canvas.toDataURL('image/png');
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+    }
+</script>
+
+<!-- Incluir la librería html2canvas -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </body>
 </html>
