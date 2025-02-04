@@ -43,22 +43,28 @@
             display: none;
         }
         #layer1 {
-            z-index: 1; /* Capa más atrás */
+            z-index: 1; /* Nueva capa antes de la capa 1 */
         }
         #layer2 {
-            z-index: 2; /* Capa intermedia */
+            z-index: 2; /* Nueva capa antes de la capa 1 */
         }
         #layer3 {
-            z-index: 3; /* Capa más adelante */
+            z-index: 3; /* Capa más atrás */
         }
         #layer4 {
-            z-index: 4; /* Nueva capa más adelante */
+            z-index: 4; /* Capa intermedia */
         }
         #layer5 {
-            z-index: 5; /* Nueva capa más adelante */
+            z-index: 5; /* Capa más adelante */
         }
         #layer6 {
             z-index: 6; /* Nueva capa más adelante */
+        }
+        #layer7 {
+            z-index: 7; /* Nueva capa más adelante */
+        }
+        #layer8 {
+            z-index: 8; /* Nueva capa más adelante */
         }
         .controls {
             margin: 5px 0; /* Reducir el margen entre los controles y otros elementos */
@@ -84,24 +90,25 @@
         <img id="layer1" class="layer" alt="C1">
         <img id="layer2" class="layer" alt="C2">
         <img id="layer3" class="layer" alt="C3">
-        <img id="layer4" class="layer" alt="Capa 4">
-        <img id="layer5" class="layer" alt="Capa 5">
-        <img id="layer6" class="layer" alt="Capa 6">
-        
+        <img id="layer4" class="layer" alt="C4">
+        <img id="layer5" class="layer" alt="C5">
+        <img id="layer6" class="layer" alt="C6">
+        <img id="layer7" class="layer" alt="C7">
+        <img id="layer8" class="layer" alt="C8">
     </div>
     <div class="controls">
         <div>
-            <label for="layer1-select">Rareza:</label>
+            <label for="layer1-select">Capa 1:</label>
             <select id="layer1-select" onchange="changeLayer('layer1', this.value, 'group1')">
                 <option value="">Seleccionar...</option>
-                <option value="Images/comun1.jpg">6</option>
+                <option value="Images/comun1.jpg">Común</option>
                 <option value="Images/rara1.jpg">Rara</option>
                 <option value="Images/epica1.jpg">Épica</option>
                 <option value="Images/LG-card-Blood_Dragon.png">Legendaria</option>
             </select>
         </div>
         <div>
-            <label for="layer2-select">Mana:</label>
+            <label for="layer2-select">Capa 2:</label>
             <select id="layer2-select" onchange="changeLayer('layer2', this.value, 'group2')">
                 <option value="">Seleccionar...</option>
                 <option value="Images/Magika_6.png">6</option>
@@ -111,7 +118,7 @@
             </select>
         </div>
         <div>
-            <label for="layer3-select">Capa 3:</label>
+            <label for="layer3-select">Rareza:</label>
             <select id="layer3-select" onchange="changeLayer('layer3', this.value, 'group3')">
                 <option value="">Seleccionar...</option>
                 <option value="Images/comun3.jpg">Común</option>
@@ -121,7 +128,7 @@
             </select>
         </div>
         <div>
-            <label for="layer4-select">Capa 4:</label>
+            <label for="layer4-select">Mana:</label>
             <select id="layer4-select" onchange="changeLayer('layer4', this.value, 'group4')">
                 <option value="">Seleccionar...</option>
                 <option value="Images/comun4.jpg">Común</option>
@@ -131,23 +138,43 @@
             </select>
         </div>
         <div>
-            <label for="layer5-select">Capa 5:</label>
+            <label for="layer5-select">Capa 3:</label>
             <select id="layer5-select" onchange="changeLayer('layer5', this.value, 'group5')">
                 <option value="">Seleccionar...</option>
-                <option value="Images/comun3.jpg">Común</option>
-                <option value="Images/rara3.jpg">Rara</option>
-                <option value="Images/epica3.jpg">Épica</option>
-                <option value="Images/legendaria3.jpg">Legendaria</option>
+                <option value="Images/comun5.jpg">Común</option>
+                <option value="Images/rara5.jpg">Rara</option>
+                <option value="Images/epica5.jpg">Épica</option>
+                <option value="Images/legendaria5.jpg">Legendaria</option>
             </select>
         </div>
         <div>
-            <label for="layer6-select">Capa 6:</label>
+            <label for="layer6-select">Capa 4:</label>
             <select id="layer6-select" onchange="changeLayer('layer6', this.value, 'group6')">
                 <option value="">Seleccionar...</option>
-                <option value="Images/comun3.jpg">Común</option>
-                <option value="Images/rara3.jpg">Rara</option>
-                <option value="Images/epica3.jpg">Épica</option>
-                <option value="Images/legendaria3.jpg">Legendaria</option>
+                <option value="Images/comun6.jpg">Común</option>
+                <option value="Images/rara6.jpg">Rara</option>
+                <option value="Images/epica6.jpg">Épica</option>
+                <option value="Images/legendaria6.jpg">Legendaria</option>
+            </select>
+        </div>
+        <div>
+            <label for="layer7-select">Capa 5:</label>
+            <select id="layer7-select" onchange="changeLayer('layer7', this.value, 'group7')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun7.jpg">Común</option>
+                <option value="Images/rara7.jpg">Rara</option>
+                <option value="Images/epica7.jpg">Épica</option>
+                <option value="Images/legendaria7.jpg">Legendaria</option>
+            </select>
+        </div>
+        <div>
+            <label for="layer8-select">Capa 6:</label>
+            <select id="layer8-select" onchange="changeLayer('layer8', this.value, 'group8')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun8.jpg">Común</option>
+                <option value="Images/rara8.jpg">Rara</option>
+                <option value="Images/epica8.jpg">Épica</option>
+                <option value="Images/legendaria8.jpg">Legendaria</option>
             </select>
         </div>
     </div>
