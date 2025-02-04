@@ -6,12 +6,12 @@
     <title>Proyect TES:Legends</title>
     <style>
         body {
-            margin: 0; /* Eliminar cualquier margen del body */
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Asegurar que el body ocupe toda la altura de la ventana */
+            min-height: 100vh;
             padding: 0;
         }
         .title {
@@ -20,14 +20,14 @@
             font-weight: bold;
             color: #333;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 5px 0; /* Reducir el margen del título */
+            margin: 5px 0;
         }
         .container {
             position: relative;
-            width: calc(100% - 20px); /* Ajustar el ancho para espacio a los lados */
-            height: calc(100vh - 150px); /* Ajustar la altura considerando el espacio del título y los botones */
-            margin: 0; /* Quitar el margen alrededor del contenedor */
-            padding: 5px; /* Reducir el padding alrededor del contenedor */
+            width: calc(100% - 20px);
+            height: calc(100vh - 150px);
+            margin: 0;
+            padding: 5px;
             box-sizing: border-box;
             overflow: hidden;
         }
@@ -37,31 +37,31 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Mantiene el ratio de proporción de la imagen */
+            object-fit: contain;
         }
         .layer {
             display: none;
         }
         #layer1 {
-            z-index: 1; /* Capa más atrás */
+            z-index: 1;
         }
         #layer2 {
-            z-index: 2; /* Capa intermedia */
+            z-index: 2;
         }
         #layer3 {
-            z-index: 3; /* Capa más adelante */
+            z-index: 3;
         }
         #layer4 {
-            z-index: 4; /* Nueva capa más adelante */
+            z-index: 4;
         }
         .controls {
-            margin: 5px 0; /* Reducir el margen entre los controles y otros elementos */
+            margin: 5px 0;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
         .controls > div {
-            margin: 2px 0; /* Añadir separación entre botones */
+            margin: 2px 0;
         }
         .save-button {
             margin-top: 10px;
@@ -69,13 +69,20 @@
             font-size: 16px;
             cursor: pointer;
         }
+        .resizable {
+            resize: both;
+            overflow: auto;
+        }
+        .draggable {
+            cursor: move;
+        }
     </style>
 </head>
 <body>
     <h1 class="title">Project TES: Legends</h1>
     <div class="container" id="image-container">
         <img class="main-image" id="main-image" src="Images/Main.png" alt="Imagen Principal">
-        <img id="layer1" class="layer" alt="C1">
+        <img id="layer1" class="layer resizable draggable" alt="C1">
         <img id="layer2" class="layer" alt="C2">
         <img id="layer3" class="layer" alt="C3">
         <img id="layer4" class="layer" alt="Capa 4">
@@ -85,7 +92,7 @@
             <label for="layer1-select">Rareza:</label>
             <select id="layer1-select" onchange="changeLayer('layer1', this.value, 'group1')">
                 <option value="">Seleccionar...</option>
-                <option value="Images/comun1.jpg">6</option>
+                <option value="Images/comun1.jpg">Común</option>
                 <option value="Images/rara1.jpg">Rara</option>
                 <option value="Images/epica1.jpg">Épica</option>
                 <option value="Images/LG-card-Blood_Dragon.png">Legendaria</option>
@@ -126,21 +133,41 @@
 
     <script>
         function changeLayer(layerId, src, groupId) {
-            // Ocultar todas las capas del mismo grupo
             var layers = document.querySelectorAll(`[data-group='${groupId}']`);
             layers.forEach(function(layer) {
                 layer.style.display = 'none';
             });
 
-            // Ocultar la imagen principal
             document.getElementById('main-image').style.display = 'none';
 
-            // Mostrar la nueva capa seleccionada
             var layer = document.getElementById(layerId);
             if (src !== "") {
                 layer.src = src;
                 layer.style.display = "block";
-                layer.setAttribute('data-group', groupId); // Añadir atributo de grupo a la nueva capa seleccionada
+                layer.setAttribute('data-group', groupId);
+            }
+        }
+
+        const draggableElements = document.querySelectorAll('.draggable');
+        draggableElements.forEach(el => {
+            el.addEventListener('mousedown', startDrag);
+        });
+
+        function startDrag(e) {
+            const elem = e.target;
+            const offsetX = e.clientX - elem.getBoundingClientRect().left;
+            const offsetY = e.clientY - elem.getBoundingClientRect().top;
+            document.addEventListener('mousemove', dragElement);
+            document.addEventListener('mouseup', stopDrag);
+
+            function dragElement(e) {
+                elem.style.left = `${e.clientX - offsetX}px`;
+                elem.style.top = `${e.clientY - offsetY}px`;
+            }
+
+            function stopDrag() {
+                document.removeEventListener('mousemove', dragElement);
+                document.removeEventListener('mouseup', stopDrag);
             }
         }
 
