@@ -54,6 +54,12 @@
         #layer4 {
             z-index: 4; /* Nueva capa más adelante */
         }
+        #layer5 {
+            z-index: 5; /* Nueva capa más adelante */
+        }
+        #layer6 {
+            z-index: 6; /* Nueva capa más adelante */
+        }
         .controls {
             margin: 5px 0; /* Reducir el margen entre los controles y otros elementos */
             display: flex;
@@ -79,6 +85,9 @@
         <img id="layer2" class="layer" alt="C2">
         <img id="layer3" class="layer" alt="C3">
         <img id="layer4" class="layer" alt="Capa 4">
+        <img id="layer5" class="layer" alt="Capa 5">
+        <img id="layer6" class="layer" alt="Capa 6">
+        
     </div>
     <div class="controls">
         <div>
@@ -119,6 +128,24 @@
                 <option value="Images/rara4.jpg">Rara</option>
                 <option value="Images/epica4.jpg">Épica</option>
                 <option value="Images/legendaria4.jpg">Legendaria</option>
+            </select>
+        </div>
+        <div>
+        <select id="layer5-select" onchange="changeLayer('layer5', this.value, 'group5')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun3.jpg">Común</option>
+                <option value="Images/rara3.jpg">Rara</option>
+                <option value="Images/epica3.jpg">Épica</option>
+                <option value="Images/legendaria3.jpg">Legendaria</option>
+            </select>
+        </div>
+        <div>
+    <select id="layer6-select" onchange="changeLayer('layer6', this.value, 'group6')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun3.jpg">Común</option>
+                <option value="Images/rara3.jpg">Rara</option>
+                <option value="Images/epica3.jpg">Épica</option>
+                <option value="Images/legendaria3.jpg">Legendaria</option>
             </select>
         </div>
     </div>
