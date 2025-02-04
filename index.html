@@ -63,6 +63,11 @@
         .controls > div {
             margin: 2px 0; /* Añadir separación entre botones */
         }
+        .zoom-control {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
         .save-button {
             margin-top: 10px;
             padding: 5px 10px;
@@ -121,6 +126,11 @@
                 <option value="Images/legendaria4.jpg">Legendaria</option>
             </select>
         </div>
+        <div class="zoom-control">
+            <label for="zoom-range">Zoom:</label>
+            <input type="range" id="zoom-range" min="0" max="200" value="100" oninput="zoomLayer(this.value)">
+            <span id="zoom-value">100%</span>
+        </div>
     </div>
     <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
 
@@ -142,6 +152,13 @@
                 layer.style.display = "block";
                 layer.setAttribute('data-group', groupId); // Añadir atributo de grupo a la nueva capa seleccionada
             }
+        }
+
+        function zoomLayer(value) {
+            var layer1 = document.getElementById('layer1');
+            var scale = value / 100;
+            layer1.style.transform = `scale(${scale})`;
+            document.getElementById('zoom-value').innerText = `${value}%`;
         }
 
         function saveImage() {
@@ -168,8 +185,9 @@
 
             var layer1 = document.getElementById('layer1');
             if (layer1.style.display !== 'none') {
-                var newLayer1Width = layer1.naturalWidth * (canvas.width / layer1.naturalWidth);
-                var newLayer1Height = layer1.naturalHeight * (canvas.height / layer1.naturalHeight);
+                var scale = document.getElementById('zoom-range').value / 100;
+                var newLayer1Width = layer1.naturalWidth * scale;
+                var newLayer1Height = layer1.naturalHeight * scale;
                 ctx.drawImage(layer1, (canvas.width - newLayer1Width) / 2, (canvas.height - newLayer1Height) / 2, newLayer1Width, newLayer1Height);
             }
 
