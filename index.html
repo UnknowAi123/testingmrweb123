@@ -134,83 +134,69 @@
         </div>
     </div>
     <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
+<script>
+    function changeLayer(layerId, src, groupId) {
+        // Ocultar todas las capas del mismo grupo
+        var layers = document.querySelectorAll(`[data-group='${groupId}']`);
+        layers.forEach(function(layer) {
+            layer.style.display = 'none';
+        });
 
-    <script>
-        function changeLayer(layerId, src, groupId) {
-            // Ocultar todas las capas del mismo grupo
-            var layers = document.querySelectorAll(`[data-group='${groupId}']`);
-            layers.forEach(function(layer) {
-                layer.style.display = 'none';
-            });
+        // Ocultar la imagen principal
+        document.getElementById('main-image').style.display = 'none';
 
-            // Ocultar la imagen principal
-            document.getElementById('main-image').style.display = 'none';
-
-            // Mostrar la nueva capa seleccionada
-            var layer = document.getElementById(layerId);
-            if (src !== "") {
-                layer.src = src;
-                layer.style.display = "block";
-                layer.setAttribute('data-group', groupId); // Añadir atributo de grupo a la nueva capa seleccionada
-            }
+        // Mostrar la nueva capa seleccionada
+        var layer = document.getElementById(layerId);
+        if (src !== "") {
+            layer.src = src;
+            layer.style.display = "block";
+            layer.setAttribute('data-group', groupId); // Añadir atributo de grupo a la nueva capa seleccionada
         }
+    }
 
-        function zoomLayer(value) {
-            var layer1 = document.getElementById('layer1');
-            var scale = value / 100;
-            layer1.style.transform = `scale(${scale})`;
-            document.getElementById('zoom-value').innerText = `${value}%`;
-        }
+    function zoomLayer(value) {
+        var layer1 = document.getElementById('layer1');
+        var scale = value / 100;
+        layer1.style.transform = `scale(${scale})`;
+        document.getElementById('zoom-value').innerText = `${value}%`;
+    }
 
-        function saveImage() {
-            var container = document.getElementById('image-container');
-            var canvas = document.createElement('canvas');
-            canvas.width = 1400;
-            canvas.height = 2000;
-            var ctx = canvas.getContext('2d');
+    function saveImage() {
+        var container = document.getElementById('image-container');
+        var canvas = document.createElement('canvas');
+        canvas.width = 1400;
+        canvas.height = 2000;
+        var ctx = canvas.getContext('2d');
 
-            var images = container.querySelectorAll('img');
-            images.forEach(function(img) {
-                if (img.style.display !== 'none') {
-                    var imgAspectRatio = img.naturalWidth / img.naturalHeight;
-                    var canvasAspectRatio = canvas.width / canvas.height;
-                    if (imgAspectRatio > canvasAspectRatio) {
-                        var height = canvas.width / imgAspectRatio;
-                        ctx.drawImage(img, 0, (canvas.height - height) / 2, canvas.width, height);
-                    } else {
-                        var width = canvas.height * imgAspectRatio;
-                        ctx.drawImage(img, (canvas.width - width) / 2, 0, width, canvas.height);
-                    }
+        var images = container.querySelectorAll('img');
+        images.forEach(function(img) {
+            if (img.style.display !== 'none') {
+                var imgAspectRatio = img.naturalWidth / img.naturalHeight;
+                var canvasAspectRatio = canvas.width / canvas.height;
+                if (imgAspectRatio > canvasAspectRatio) {
+                    var height = canvas.width / imgAspectRatio;
+                    ctx.drawImage(img, 0, (canvas.height - height) / 2, canvas.width, height);
+                } else {
+                    var width = canvas.height * imgAspectRatio;
+                    ctx.drawImage(img, (canvas.width - width) / 2, 0, width, canvas.height);
                 }
-            });
-
-            var layer1 = document.getElementById('layer1');
-            if (layer1.style.display !== 'none') {
-                var scale = document.getElementById('zoom-range').value / 100;
-                var newLayer1Width = layer1.naturalWidth * scale;
-                var newLayer1Height = layer1.naturalHeight * scale;
-                ctx.drawImage(layer1, (canvas.width - newLayer1Width) / 2, (canvas.height - newLayer1Height) / 2, newLayer1Width, newLayer1Height);
             }
+        });
 
-            var link = document.createElement('a');
-            link.download = 'TES_Legends.png';
-            link.href = canvas.toDataURL('image/png');
-            });
+        var layer1 = document.getElementById('layer1');
+        if (layer1.style.display !== 'none') {
+            var scale = document.getElementById('zoom-range').value / 100;
+            var newLayer1Width = layer1.naturalWidth * scale;
+            var newLayer1Height = layer1.naturalHeight * scale;
+            ctx.drawImage(layer1, (canvas.width - newLayer1Width) / 2, (canvas.height - newLayer1Height) / 2, newLayer1Width, newLayer1Height);
+        }
 
-var layer1 = document.getElementById('layer1');
-if (layer1.style.display !== 'none') {
-    var scale = document.getElementById('zoom-range').value / 100;
-    var newLayer1Width = layer1.naturalWidth * scale;
-    var newLayer1Height = layer1.naturalHeight * scale;
-    ctx.drawImage(layer1, (canvas.width - newLayer1Width) / 2, (canvas.height - newLayer1Height) / 2, newLayer1Width, newLayer1Height);
-}
-
-var link = document.createElement('a');
-link.download = 'TES_Legends.png';
-link.href = canvas.toDataURL('image/png');
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
+        var link = document.createElement('a');
+        link.download = 'TES_Legends.png';
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 </script>
 
