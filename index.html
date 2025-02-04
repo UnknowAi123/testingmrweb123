@@ -42,20 +42,23 @@
         .layer {
             display: none;
         }
+        #layer0 {
+            z-index: 0; /* Nueva capa 0 */
+        }
         #layer1 {
             z-index: 1; /* Nueva capa antes de la capa 1 */
         }
         #layer2 {
-            z-index: 2; /* Nueva capa antes de la capa 1 */
+            z-index: 2; /* Capa más atrás */
         }
         #layer3 {
-            z-index: 3; /* Capa más atrás */
+            z-index: 3; /* Capa intermedia */
         }
         #layer4 {
-            z-index: 4; /* Capa intermedia */
+            z-index: 4; /* Capa más adelante */
         }
         #layer5 {
-            z-index: 5; /* Capa más adelante */
+            z-index: 5; /* Nueva capa más adelante */
         }
         #layer6 {
             z-index: 6; /* Nueva capa más adelante */
@@ -87,6 +90,7 @@
     <h1 class="title">Project TES: Legends</h1>
     <div class="container" id="image-container">
         <img class="main-image" id="main-image" src="Images/Main.png" alt="Imagen Principal">
+        <img id="layer0" class="layer" alt="C0">
         <img id="layer1" class="layer" alt="C1">
         <img id="layer2" class="layer" alt="C2">
         <img id="layer3" class="layer" alt="C3">
@@ -97,6 +101,16 @@
         <img id="layer8" class="layer" alt="C8">
     </div>
     <div class="controls">
+        <div>
+            <label for="layer0-select">Capa 0:</label>
+            <select id="layer0-select" onchange="changeLayer('layer0', this.value, 'group0')">
+                <option value="">Seleccionar...</option>
+                <option value="Images/comun0.jpg">Común</option>
+                <option value="Images/rara0.jpg">Rara</option>
+                <option value="Images/epica0.jpg">Épica</option>
+                <option value="Images/legendaria0.jpg">Legendaria</option>
+            </select>
+        </div>
         <div>
             <label for="layer1-select">Capa 1:</label>
             <select id="layer1-select" onchange="changeLayer('layer1', this.value, 'group1')">
@@ -178,6 +192,7 @@
             </select>
         </div>
     </div>
+    <input type="file" id="file-input" class="save-button" onchange="loadLayerImage(event)">
     <button class="save-button" onclick="saveImage()">Guardar Imagen</button>
 
     <script>
@@ -198,6 +213,18 @@
                 layer.style.display = "block";
                 layer.setAttribute('data-group', groupId); // Añadir atributo de grupo a la nueva capa seleccionada
             }
+        }
+
+        function loadLayerImage(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.getElementById('layer0');
+                img.src = e.target.result;
+                img.style.display = 'block';
+                img.setAttribute('data-group', 'group0'); // Asignar el grupo a la nueva capa
+            };
+            reader.readAsDataURL(file);
         }
 
         function saveImage() {
